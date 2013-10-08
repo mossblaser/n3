@@ -9,7 +9,7 @@ Software
 --------
 
 The software for a Maple Mini board can be found in `./software/`. The LeafLabs
-[libmaple](http://leaflabs.com/docs/unix-toolchain.html]) should be installed,
+[libmaple](http://leaflabs.com/docs/unix-toolchain.html) should be installed,
 the environment variable `LIB_MAPLE_HOME` set to its installed path and the
 compiler in the `PATH`.
 
