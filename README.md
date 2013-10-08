@@ -18,3 +18,9 @@ Build and flash using:
 	cd software
 	make
 	make install
+
+
+Hardware
+--------
+
+Designs for the hardware can be found in `./hardware/`.
