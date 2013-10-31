@@ -21,6 +21,7 @@ export LIB_MAPLE_HOME := $(shell dirname $(LIB_MAPLE_HOME)/stub)
 # custom user modules path fix
 export USER_MODULES := $(BASEDIR) $(USER_MODULES)
 
+
 .DEFAULT_GOAL := sketch
 
 # To make it compatible with default project settings of Eclipse CDT.

@@ -1,15 +1,15 @@
 // Not quite wiring...
 #include <wirish/wirish.h>
 
+#include "n3.h"
+#include "n3_init.h"
+
 int main(void)
 {
-	bool state = false;
-	pinMode(BOARD_LED_PIN, OUTPUT);
+	n3_init();
 	
 	while (true) {
-		digitalWrite(BOARD_LED_PIN, state);
-		state = !state;
-		delay(500);
+		// Do nothing... forever!
 	}
 	
 	return 0;
