@@ -59,7 +59,8 @@ cSRCS_$(d) :=
 # will get confused and try to build it without our CXXFLAGS. So call
 # it something else. Annoying! Hopefully LeafLabs will fix it soon.
 cppSRCS_$(d) := n3_main.cpp
-cppSRCS_$(d) += n3_init.cpp
+cppSRCS_$(d) += n3_globals.cpp
+cppSRCS_$(d) += n3_bat.cpp
 
 # sSRCS_$(d) are the assembly sources. We don't have any.
 sSRCS_$(d) :=

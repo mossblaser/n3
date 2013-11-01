@@ -2,11 +2,10 @@
 #include <wirish/wirish.h>
 
 #include "n3.h"
-#include "n3_init.h"
 
 int main(void)
 {
-	n3_init();
+	
 	
 	while (true) {
 		// Do nothing... forever!

@@ -5,9 +5,6 @@
 #ifndef N3_H
 #define N3_H
 
-#include <wirish/wirish.h>
-#include <LiquidCrystal/LiquidCrystal.h>
-
 // -----------------------------------------------------------------------------
 // Software params
 // -----------------------------------------------------------------------------
@@ -31,10 +28,12 @@
 #define N3_LCD_D5_PIN     19
 #define N3_LCD_D6_PIN     20
 #define N3_LCD_D7_PIN     21
-extern LiquidCrystal n3_lcd;
 
 #define N3_LCD_COLS 8
 #define N3_LCD_ROWS 2
+
+// System voltage
+#define N3_UC_VOLTAGE 3.3
 
 // Battery voltage input
 #define N3_BAT_V_PIN 3
