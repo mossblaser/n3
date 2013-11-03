@@ -33,6 +33,13 @@ class N3_Btn {
 		
 		
 		/**
+		 * Get the duration of the last button press but don't reset it. Zero if no
+		 * button press since the last get_press().
+		 */
+		unsigned long peek_press(void) {return last_duration = 0;}
+		
+		
+		/**
 		 * If the button has been pressed-and-released since the last call, returns
 		 * the number of msec it was pressed for. Otherwise, returns 0.
 		 */

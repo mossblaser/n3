@@ -32,7 +32,7 @@ N3_Btn::update(void)
 		last_pressed = millis();
 	} else if (last_state && !new_state) {
 		// The button has just been released
-		int press_duration = millis() - last_pressed;
+		unsigned long press_duration = millis() - last_pressed;
 		if (press_duration > BTN_MAX_JITTER_DURATION) {
 			last_duration = press_duration;
 		}
