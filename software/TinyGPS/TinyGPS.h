@@ -25,8 +25,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef TinyGPS_h
 #define TinyGPS_h
 
-#include <cstdlib>
-
 // For maple compatibility (JDH 2013)
 #include <wirish/wirish.h>
 

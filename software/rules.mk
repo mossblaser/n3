@@ -65,6 +65,7 @@ cSRCS_$(d) += os_coord/os_coord_ordinance_survey.c
 cppSRCS_$(d) := n3_main.cpp
 cppSRCS_$(d) += n3_globals.cpp
 cppSRCS_$(d) += n3_bat.cpp
+cppSRCS_$(d) += n3_gps.cpp
 
 cppSRCS_$(d) += TinyGPS/TinyGPS.cpp
 
