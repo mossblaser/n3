@@ -5,6 +5,8 @@
 #ifndef N3_H
 #define N3_H
 
+#define N3_VERSION_STR "0.1"
+
 // -----------------------------------------------------------------------------
 // Software params
 // -----------------------------------------------------------------------------
@@ -17,6 +19,9 @@
 
 // How long should the splash be shown for each window? (msec)
 #define N3_SPLASH_DURATION 1000
+
+// For windows with several pages to show, how long should each page be shown?
+#define N3_PAGE_DURATION 3000ul
 
 // -----------------------------------------------------------------------------
 // Pins and device definitions

@@ -67,7 +67,9 @@ cppSRCS_$(d) += n3_globals.cpp
 cppSRCS_$(d) += n3_bat.cpp
 cppSRCS_$(d) += n3_gps.cpp
 cppSRCS_$(d) += n3_btn.cpp
+
 cppSRCS_$(d) += n3_ui.cpp
+cppSRCS_$(d) += n3_ui_about.cpp
 
 cppSRCS_$(d) += TinyGPS/TinyGPS.cpp
 

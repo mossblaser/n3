@@ -59,8 +59,8 @@ N3_UI::update_bat_gps_status(bool force)
 		last_gps_level = -1;
 	}
 	
-	// Show the battery level as nominally between 0 and 5 (but if otherwise assumed
-	// to be 5.
+	// Show the battery level as nominally between 0 and 5 (but if greater assumed
+	// to be 5).
 	int bat_level = (int)(((n3_bat.get_voltage() - N3_BAT_MIN_V)
 	                       / (N3_BAT_MAX_V-N3_BAT_MIN_V)) * 5.0);
 	
