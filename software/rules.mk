@@ -13,7 +13,8 @@ include $(MAKEDIR)/header.mk
 # where compilation output (like object files) goes. The variable $(d)
 # gets expanded to the directory containing this rules.mk file.
 
-PROJECT_BUILD_DIRS :=
+PROJECT_BUILD_DIRS := os_coord
+PROJECT_BUILD_DIRS += TinyGPS
 
 BUILDDIRS += $(addprefix $(BUILD_PATH)/$(d)/, $(PROJECT_BUILD_DIRS))
 
@@ -35,9 +36,11 @@ FLAGS_ABS_INCLUDE += $(addprefix -I/, $(EXTERNAL_INCLUDE_DIRS))
 CFLAGS_$(d) := $(WIRISH_INCLUDES) $(LIBMAPLE_INCLUDES)
 # We'll also want our local include directory
 CFLAGS_$(d) += $(FLAGS_ABS_INCLUDE)
+# C99, mann!
+CFLAGS_$(d) += -std=c99
 
-# CXXFLAGS_$(d) are extra flags passed to the C++ compiler. Example:
-# CXXFLAGS_$(d) := -DMY_MAGIC_NUMBER=0x1eaf1ab5 $(FLAGS_ABS_INCLUDE)
+# CXXFLAGS_$(d) are extra flags passed to the C++ compiler.
+CXXFLAGS_$(D) := -std=gnu++98
 
 # ASFLAGS_$(d) are extra flags passed to the assembler. We don't have any
 # assembly language files in this example, so we'll just leave it empty.
@@ -51,7 +54,8 @@ ASFLAGS_$(d) :=
 ### Source files
 
 # cSRCS_$(d) are the C source files we want compiled.
-cSRCS_$(d) :=
+cSRCS_$(d) := os_coord/os_coord_transform.c
+cSRCS_$(d) += os_coord/os_coord_ordinance_survey.c
 
 # cppSRCS_$(d) are the C++ sources we want compiled.
 #
@@ -63,9 +67,6 @@ cppSRCS_$(d) += n3_globals.cpp
 cppSRCS_$(d) += n3_bat.cpp
 
 cppSRCS_$(d) += TinyGPS/TinyGPS.cpp
-
-cppSRCS_$(d) += os_coord/os_coord_transform.cpp
-cppSRCS_$(d) += os_coord/os_coord_ordinance_survey.cpp
 
 # sSRCS_$(d) are the assembly sources. We don't have any.
 sSRCS_$(d) :=
