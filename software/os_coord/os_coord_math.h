@@ -8,8 +8,16 @@
 #ifndef OS_COORD_MATH_H
 #define OS_COORD_MATH_H
 
-#define PI             3.141592653589793
+#ifndef PI
+#define PI 3.141592653589793
+#endif
+
+#ifndef DEG_2_RAD
 #define DEG_2_RAD(deg) (((deg)/180) * PI)
+#endif
+
+#ifndef RAD_2_DEG
 #define RAD_2_DEG(rad) (((rad)/PI) * 180)
+#endif
 
 #endif
