@@ -9,8 +9,14 @@
 // Software params
 // -----------------------------------------------------------------------------
 
-// How frequently should the UI be refreshed (msec)
+// How frequently should the UI be refreshed in the worst case? (msec)
 #define N3_UI_UPDATE_PERIOD 500
+
+// How long should the button be pressed to count as a long press (msec)
+#define N3_BTN_LONG_PRESS_DURATION 500
+
+// How long should the splash be shown for each window? (msec)
+#define N3_SPLASH_DURATION 1000
 
 // -----------------------------------------------------------------------------
 // Pins and device definitions
@@ -39,6 +45,9 @@
 #define N3_BAT_V_PIN 3
 #define N3_BAT_V_DIV_R1 50000.0
 #define N3_BAT_V_DIV_R2 50000.0
+
+#define N3_BAT_MIN_V 2.4
+#define N3_BAT_MAX_V 2.8
 
 // Button
 #define N3_BTN_PIN 10
