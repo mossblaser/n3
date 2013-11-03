@@ -8,10 +8,12 @@
 #include <LiquidCrystal/LiquidCrystal.h>
 #include "n3_bat.h"
 #include "n3_gps.h"
+#include "n3_btn.h"
 
 extern LiquidCrystal n3_lcd;
 extern N3_Bat        n3_bat;
 extern N3_GPS        n3_gps;
+extern N3_Btn        n3_btn;
 
 #endif
 
