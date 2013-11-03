@@ -32,6 +32,7 @@ TinyGPS::TinyGPS()
   ,  _latitude(GPS_INVALID_ANGLE)
   ,  _longitude(GPS_INVALID_ANGLE)
   ,  _altitude(GPS_INVALID_ALTITUDE)
+  ,  _geoid_separation(GPS_INVALID_ALTITUDE)
   ,  _speed(GPS_INVALID_SPEED)
   ,  _course(GPS_INVALID_ANGLE)
   ,  _hdop(GPS_INVALID_HDOP)
@@ -189,12 +190,13 @@ bool TinyGPS::term_complete()
           _course    = _new_course;
           break;
         case _GPS_SENTENCE_GPGGA:
-          _altitude  = _new_altitude;
-          _time      = _new_time;
-          _latitude  = _new_latitude;
-          _longitude = _new_longitude;
-          _numsats   = _new_numsats;
-          _hdop      = _new_hdop;
+          _altitude         = _new_altitude;
+          _geoid_separation = _new_geoid_separation;
+          _time             = _new_time;
+          _latitude         = _new_latitude;
+          _longitude        = _new_longitude;
+          _numsats          = _new_numsats;
+          _hdop             = _new_hdop;
           break;
         }
 
@@ -271,6 +273,9 @@ bool TinyGPS::term_complete()
       break;
     case COMBINE(_GPS_SENTENCE_GPGGA, 9): // Altitude (GPGGA)
       _new_altitude = parse_decimal();
+      break;
+    case COMBINE(_GPS_SENTENCE_GPGGA, 11): // Geoid separation (GPGGA)
+      _new_geoid_separation = parse_decimal();
       break;
   }
 
@@ -394,6 +399,11 @@ void TinyGPS::crack_datetime(int *year, byte *month, byte *day,
 float TinyGPS::f_altitude()    
 {
   return _altitude == GPS_INVALID_ALTITUDE ? GPS_INVALID_F_ALTITUDE : _altitude / 100.0;
+}
+
+float TinyGPS::f_ellipsoidal_height()
+{
+  return _altitude == GPS_INVALID_ALTITUDE ? GPS_INVALID_F_ALTITUDE : (_altitude+_geoid_separation) / 100.0;
 }
 
 float TinyGPS::f_course()

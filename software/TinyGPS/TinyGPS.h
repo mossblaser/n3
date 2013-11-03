@@ -3,6 +3,7 @@ TinyGPS - a small GPS library for Arduino providing basic NMEA parsing
 Based on work by and "distance_to" and "course_to" courtesy of Maarten Lamers.
 Suggestion to add satellites(), course_to(), and cardinal(), by Matt Monson.
 Precision improvements suggested by Wayne Holder.
+Ellipsoidal height added by Jonathan Heathcote (Nov 2013).
 Copyright (C) 2008-2013 Mikal Hart
 All rights reserved.
 
@@ -24,13 +25,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef TinyGPS_h
 #define TinyGPS_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
+#include <cstdlib>
 
-#include <stdlib.h>
+// For maple compatibility (JDH 2013)
+#include <wirish/wirish.h>
 
 #define _GPS_VERSION 13 // software version of this library
 #define _GPS_MPH_PER_KNOT 1.15077945
@@ -67,6 +65,9 @@ public:
   // signed altitude in centimeters (from GPGGA sentence)
   inline long altitude() { return _altitude; }
 
+  // signed ellipsoidal height in centimeters (from GPGGA sentence)
+  inline long ellipsoidal_height() { return _altitude + _geoid_separation; }
+
   // course in last full GPRMC sentence in 100th of a degree
   inline unsigned long course() { return _course; }
 
@@ -83,6 +84,7 @@ public:
   void crack_datetime(int *year, byte *month, byte *day, 
     byte *hour, byte *minute, byte *second, byte *hundredths = 0, unsigned long *fix_age = 0);
   float f_altitude();
+  float f_ellipsoidal_height();
   float f_course();
   float f_speed_knots();
   float f_speed_mph();
@@ -108,6 +110,7 @@ private:
   long _latitude, _new_latitude;
   long _longitude, _new_longitude;
   long _altitude, _new_altitude;
+  long _geoid_separation, _new_geoid_separation;
   unsigned long  _speed, _new_speed;
   unsigned long  _course, _new_course;
   unsigned long  _hdop, _new_hdop;
