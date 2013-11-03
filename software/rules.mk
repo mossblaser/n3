@@ -62,6 +62,11 @@ cppSRCS_$(d) := n3_main.cpp
 cppSRCS_$(d) += n3_globals.cpp
 cppSRCS_$(d) += n3_bat.cpp
 
+cppSRCS_$(d) += TinyGPS/TinyGPS.cpp
+
+cppSRCS_$(d) += os_coord/os_coord_transform.c
+cppSRCS_$(d) += os_coord/os_coord_ordinance_survey.c
+
 # sSRCS_$(d) are the assembly sources. We don't have any.
 sSRCS_$(d) :=
 
