@@ -7,7 +7,7 @@
 
 #include <wirish/wirish.h>
 
-#define BTN_MAX_JITTER_DURATION 2
+#define BTN_MAX_JITTER_DURATION 2ul
 
 /**
  * Assumes a simple push-to-make switch connected to ground and internally
@@ -36,7 +36,7 @@ class N3_Btn {
 		 * If the button has been pressed-and-released since the last call, returns
 		 * the number of msec it was pressed for. Otherwise, returns 0.
 		 */
-		int get_press(void) {int d = last_duration; last_duration = 0; return d;}
+		unsigned long get_press(void) {unsigned long d = last_duration; last_duration = 0; return d;}
 	
 	protected:
 		uint8 pin;
@@ -45,11 +45,11 @@ class N3_Btn {
 		bool last_state;
 		
 		// The value of millis() when the button was first pressed.
-		int last_pressed;
+		unsigned long last_pressed;
 		
 		// The number of millis between the button last being pressed and released
 		// or 0 if not recently pressed.
-		int last_duration;
+		unsigned long last_duration;
 };
 
 #endif
