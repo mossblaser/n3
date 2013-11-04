@@ -9,17 +9,24 @@ N3_UI::N3_UI(N3_UI_Window **windows_, int num_windows_)
 , num_windows(num_windows_)
 , cur_window(-1)
 {
-	// Set the LCD going...
-	n3_lcd.begin(N3_LCD_COLS, N3_LCD_ROWS);
-	n3_lcd.clear();
-	
-	next_window();
+	// Do nothing (initialisation is done when cur_window is -ve on the first call
+	// to update()).
 }
 
 
 void
 N3_UI::update(void)
 {
+	// Initialise everything if needed.
+	if (cur_window < 0) {
+		// Set the LCD going...
+		n3_lcd.begin(N3_LCD_COLS, N3_LCD_ROWS);
+		n3_lcd.clear();
+		
+		// Select the first window to show
+		next_window();
+	}
+	
 	// Has the user short-pressed the button? (And thus wishes to advance the
 	// window)
 	if (!(windows[cur_window]->is_valid())

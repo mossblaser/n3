@@ -2,13 +2,24 @@
 #include <wirish/wirish.h>
 
 #include "n3.h"
+#include "n3_globals.h"
+#include "n3_ui.h"
+#include "n3_ui_about.h"
+
+N3_UI_About_Window n3_ui_about_window;
+
+N3_UI_Window *windows[] = {
+	&n3_ui_about_window,
+};
+int num_windows = sizeof(windows)/sizeof(N3_UI_Window *);
+
+N3_UI n3_ui(windows, num_windows);
 
 int main(void)
 {
-	
-	
 	while (true) {
-		// Do nothing... forever!
+		n3_btn.update();
+		n3_ui.update();
 	}
 	
 	return 0;
