@@ -11,13 +11,13 @@
 
 /**
  * Assumes a simple push-to-make switch connected to ground and internally
- * pulled up in the uC.
+ * pulled down in the uC.
  */
 class N3_Btn {
 	public:
 		/**
 		 * Attaches a do-nothing interrupt handler to the given pin on any change
-		 * and enables an internal pull-up resistor.
+		 * and enables an internal down-up resistor.
 		 *
 		 * Should the device be in sleep mode, the interrupt will re-awaken it
 		 * which should awaken a main-loop allowing the calling of the update()
@@ -36,7 +36,7 @@ class N3_Btn {
 		 * Get the duration of the last button press but don't reset it. Zero if no
 		 * button press since the last get_press().
 		 */
-		unsigned long peek_press(void) {return last_duration = 0;}
+		unsigned long peek_press(void) {return last_duration;}
 		
 		
 		/**
