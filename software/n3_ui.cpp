@@ -71,6 +71,7 @@ N3_UI::update_bat_gps_status(bool force)
 	// to be 5).
 	int bat_level = (int)(((n3_bat.get_voltage() - N3_BAT_MIN_V)
 	                       / (N3_BAT_MAX_V-N3_BAT_MIN_V)) * 5.0);
+	bat_level = max(bat_level, 0);
 	
 	int gps_level = n3_gps.get_num_satellites();
 	

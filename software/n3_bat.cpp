@@ -13,16 +13,16 @@ N3_Bat::N3_Bat( uint8 pin_
               , double r2
               , double a_ref_v
               )
+: pin(pin_)
+, a_in_to_v(((r2/(r1+r2))*a_ref_v) / 1024.0)
 {
-	pin = pin_;
-	a_in_to_v = ((r2/(r1+r2))*a_ref_v) / 1024.0;
-	
-	pinMode(pin, INPUT_ANALOG);
+	// Nothing to do
 }
 
 
 double
 N3_Bat::get_voltage(void)
 {
-	return (((double)analogRead(pin)) / 1024.0) * a_in_to_v;
+	pinMode(pin, INPUT_ANALOG);
+	return ((double)analogRead(pin)) * a_in_to_v;
 }
