@@ -3,12 +3,16 @@
 
 #include "n3.h"
 #include "n3_globals.h"
+
 #include "n3_ui.h"
 #include "n3_ui_about.h"
+#include "n3_ui_satellites.h"
 
-N3_UI_About_Window n3_ui_about_window;
+N3_UI_About_Window      n3_ui_about_window;
+N3_UI_Satellites_Window n3_ui_satellites_window;
 
 N3_UI_Window *windows[] = {
+	&n3_ui_satellites_window,
 	&n3_ui_about_window,
 };
 int num_windows = sizeof(windows)/sizeof(N3_UI_Window *);

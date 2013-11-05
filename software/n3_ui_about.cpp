@@ -83,7 +83,7 @@ N3_UI_About_Window::update(void)
 
 
 // TODO: Add Icon
-uint8 XXX_NULL_ICON[8] = {1,1,1,1, 1,1,1,1};
+static uint8 XXX_NULL_ICON[8] = {1,1,1,1, 1,1,1,1};
 
 uint8 *
 N3_UI_About_Window::get_splash_icon(int char_num)
