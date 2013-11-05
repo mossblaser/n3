@@ -23,11 +23,21 @@ N3_UI_Satellites_Window::update(void)
 		n3_lcd.home();
 		n3_lcd.print("       ");
 		n3_lcd.home();
-		n3_lcd.print("Got ");
-		n3_lcd.print(num_sats);
-		n3_lcd.setCursor(0,1);
 		//            |-----|
-		n3_lcd.print("Sats.  ");
+		n3_lcd.print(num_sats);
+		n3_lcd.print(" sats");
+		n3_lcd.setCursor(0,1);
+		switch(num_sats) {
+			case 0: case 1: case 2:
+			//            |-----|
+			n3_lcd.print("No Fix "); break;
+			case 3:
+			//            |-----|
+			n3_lcd.print("2D Fix "); break;
+			default:
+			//            |-----|
+			n3_lcd.print("3D Fix "); break;
+		}
 	}
 }
 
