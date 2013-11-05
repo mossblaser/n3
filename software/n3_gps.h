@@ -24,6 +24,8 @@ class N3_GPS {
 		      , uint32          baudrate
 		      );
 		
+		void begin(void);
+		
 		
 		/**
 		 * Read and parse any new input from the serial port.
@@ -68,6 +70,7 @@ class N3_GPS {
 	
 	protected:
 		HardwareSerial *serial;
+		uint32 baudrate;
 		TinyGPS gps;
 };
 

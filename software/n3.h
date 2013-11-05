@@ -29,7 +29,7 @@
 
 // Serial port used to communicate with the GPS receiver
 #define N3_GPS_BAUDRATE 57600
-#define n3_gps_serial Serial1
+#define n3_gps_serial Serial2
 
 // LCD Display
 #define N3_LCD_RS_PIN     15

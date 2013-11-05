@@ -17,7 +17,13 @@ N3_UI n3_ui(windows, num_windows);
 
 int main(void)
 {
+	n3_btn.begin();
+	n3_bat.begin();
+	n3_gps.begin();
+	n3_ui.begin();
+	
 	while (true) {
+		n3_gps.update();
 		n3_btn.update();
 		n3_ui.update();
 	}

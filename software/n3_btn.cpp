@@ -18,15 +18,19 @@ N3_Btn::N3_Btn(uint8 pin_)
 	// Do nothing, initialise in the first call to update()
 }
 
+
+void
+N3_Btn::begin(void)
+{
+	// Initialise with pull-down and enable an interrupt
+	pinMode(pin, INPUT_PULLDOWN);
+	attachInterrupt(pin, do_nothing_isr, CHANGE);
+}
+
+
 void
 N3_Btn::update(void)
 {
-	// Initialise with pull-down and enable an interrupt
-	if (last_pressed == 0ul) {
-		pinMode(pin, INPUT_PULLDOWN);
-		attachInterrupt(pin, do_nothing_isr, CHANGE);
-	}
-	
 	// Invert the pin's value as it is being pulled-up
 	bool new_state = digitalRead(pin);
 	

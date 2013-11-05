@@ -42,6 +42,10 @@ class N3_Bat {
 		      , double a_ref_v
 		      );
 		
+		/**
+		 * Set up the analog pin.
+		 */
+		void begin(void);
 		
 		double get_voltage(void);
 		

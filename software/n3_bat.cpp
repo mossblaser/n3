@@ -20,9 +20,15 @@ N3_Bat::N3_Bat( uint8 pin_
 }
 
 
+void
+N3_Bat::begin(void)
+{
+	pinMode(pin, INPUT_ANALOG);
+}
+
+
 double
 N3_Bat::get_voltage(void)
 {
-	pinMode(pin, INPUT_ANALOG);
 	return ((double)analogRead(pin)) * a_in_to_v;
 }

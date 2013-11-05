@@ -7,10 +7,18 @@
 
 
 N3_GPS::N3_GPS( HardwareSerial *serial_
-              , uint32          baudrate
+              , uint32          baudrate_
               )
+: serial(serial_)
+, baudrate(baudrate_)
 {
-	serial = serial_;
+	// Do nothing
+}
+
+
+void
+N3_GPS::begin(void)
+{
 	serial->begin(baudrate);
 }
 

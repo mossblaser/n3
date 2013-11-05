@@ -15,6 +15,8 @@
  */
 class N3_Btn {
 	public:
+		N3_Btn(uint8 pin);
+		
 		/**
 		 * Attaches a do-nothing interrupt handler to the given pin on any change
 		 * and enables an internal down-up resistor.
@@ -23,8 +25,7 @@ class N3_Btn {
 		 * which should awaken a main-loop allowing the calling of the update()
 		 * method.
 		 */
-		N3_Btn( uint8 pin
-		      );
+		void begin(void);
 		
 		/**
 		 * Call either by polling or at least after any change of the pin's value.

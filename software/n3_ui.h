@@ -63,6 +63,8 @@ class N3_UI {
 	public:
 		N3_UI(N3_UI_Window **windows, int num_windows);
 		
+		void begin(void);
+		
 		void update(void);
 	
 	protected:
