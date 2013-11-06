@@ -15,10 +15,10 @@
 #define N3_UI_UPDATE_PERIOD 500
 
 // How long should the button be pressed to count as a long press (msec)
-#define N3_BTN_LONG_PRESS_DURATION 500
+#define N3_BTN_LONG_PRESS_DURATION 500ul
 
 // How long should the splash be shown for each window? (msec)
-#define N3_SPLASH_DURATION 1000
+#define N3_SPLASH_DURATION 1000ul
 
 // For windows with several pages to show, how long should each page be shown?
 #define N3_PAGE_DURATION 3000ul

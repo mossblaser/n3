@@ -32,13 +32,8 @@ N3_UI::update(void)
 {
 	// Has the user short-pressed the button? (And thus wishes to advance the
 	// window)
-	if (!(windows[cur_window]->is_valid())
-	    || ( n3_btn.peek_press() > 0
-	         && n3_btn.peek_press() < N3_BTN_LONG_PRESS_DURATION)
-	   ) {
-		n3_btn.get_press();
+	if (!(windows[cur_window]->is_valid()) || n3_btn.short_pressed())
 		next_window();
-	}
 	
 	if (!focused) {
 		// Has the splash been shown long enough yet?

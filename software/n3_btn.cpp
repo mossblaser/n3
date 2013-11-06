@@ -9,11 +9,14 @@ void do_nothing_isr(void)
 }
 
 
-N3_Btn::N3_Btn(uint8 pin_)
+N3_Btn::N3_Btn(uint8 pin_, unsigned long long_press_duration_)
 : pin(pin_)
+, long_press_duration(long_press_duration_)
 , last_state(false)
-, last_duration(0ul)
 , last_pressed(0ul)
+, short_pressed_flag(false)
+, long_pressed_flag(false)
+, long_pressed_flag_occurred(false)
 {
 	// Do nothing, initialise in the first call to update()
 }
@@ -37,11 +40,21 @@ N3_Btn::update(void)
 	if (!last_state && new_state) {
 		// The button has just started being pressed
 		last_pressed = millis();
+		long_pressed_flag_occurred = false;
 	} else if (last_state && !new_state) {
 		// The button has just been released
 		unsigned long press_duration = millis() - last_pressed;
-		if (press_duration > BTN_MAX_JITTER_DURATION) {
-			last_duration = press_duration;
+		if (press_duration > BTN_MAX_JITTER_DURATION && press_duration < long_press_duration) {
+			// Indicate that a short press has occurred (long presses are reported
+			// further down)
+			short_pressed_flag = false;
+		}
+	} else if (new_state) {
+		// The button is being pressed, has it been a long press yet?
+		unsigned long press_duration = millis() - last_pressed;
+		if (press_duration >= long_press_duration && !long_pressed_flag_occurred) {
+			long_pressed_flag = true;
+			long_pressed_flag_occurred = true;
 		}
 	}
 	

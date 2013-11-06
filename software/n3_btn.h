@@ -15,7 +15,9 @@
  */
 class N3_Btn {
 	public:
-		N3_Btn(uint8 pin);
+		N3_Btn( uint8         pin
+		      , unsigned long long_press_duration
+		      );
 		
 		/**
 		 * Attaches a do-nothing interrupt handler to the given pin on any change
@@ -34,20 +36,22 @@ class N3_Btn {
 		
 		
 		/**
-		 * Get the duration of the last button press but don't reset it. Zero if no
-		 * button press since the last get_press().
+		 * Was the button pressed-then-released for a short period? Returns true if
+		 * so and clears the flag.
 		 */
-		unsigned long peek_press(void) {return last_duration;}
+		bool short_pressed(void) {bool f = short_pressed_flag; short_pressed_flag = false; return f;}
 		
 		
 		/**
-		 * If the button has been pressed-and-released since the last call, returns
-		 * the number of msec it was pressed for. Otherwise, returns 0.
+		 * Was the button long pressed? If so, return true and clear the flag. This
+		 * function will also return true if the button is still being held.
 		 */
-		unsigned long get_press(void) {unsigned long d = last_duration; last_duration = 0; return d;}
+		bool long_pressed(void) {bool f = long_pressed_flag; long_pressed_flag = false; return f;}
 	
 	protected:
 		uint8 pin;
+		
+		unsigned long long_press_duration;
 		
 		// State of the pin when last observed
 		bool last_state;
@@ -55,9 +59,16 @@ class N3_Btn {
 		// The value of millis() when the button was first pressed.
 		unsigned long last_pressed;
 		
-		// The number of millis between the button last being pressed and released
-		// or 0 if not recently pressed.
-		unsigned long last_duration;
+		// Indicates the short-press has occurred which hasn't been read
+		bool short_pressed_flag;
+		
+		// Indicates the long-press has occurred which hasn't been seen
+		bool long_pressed_flag;
+		
+		// Indicates that a long-press has happened and flagged this button-press so
+		// don't set the long_pressed_flag again (as it may have been read so we
+		// shouldn't report it again).
+		bool long_pressed_flag_occurred;
 };
 
 #endif

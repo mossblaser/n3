@@ -28,4 +28,6 @@ N3_GPS n3_gps( &n3_gps_serial
              , N3_GPS_BAUDRATE
              );
 
-N3_Btn n3_btn(N3_BTN_PIN);
+N3_Btn n3_btn( N3_BTN_PIN
+             , N3_BTN_LONG_PRESS_DURATION
+             );
