@@ -39,6 +39,8 @@ N3_UI_Satellites_Window::update(void)
 			n3_lcd.print("3D Fix "); break;
 		}
 	}
+	
+	last_num_sats = num_sats;
 }
 
 

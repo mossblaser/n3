@@ -48,6 +48,13 @@ N3_GPS::get_num_satellites(void)
 }
 
 
+double
+N3_GPS::get_altitude(void)
+{
+	return ((double)gps.altitude())/100.0;
+}
+
+
 os_lat_lon_t
 N3_GPS::get_coordinates(void)
 {

@@ -8,6 +8,8 @@ N3_UI::N3_UI(N3_UI_Window **windows_, int num_windows_)
 : windows(windows_)
 , num_windows(num_windows_)
 , cur_window(-1)
+, last_bat_level(-1)
+, last_gps_level(-1)
 {
 	// Do nothing (initialisation is done when cur_window is -ve on the first call
 	// to update()).
@@ -70,8 +72,6 @@ N3_UI::update(void)
 void
 N3_UI::update_bat_gps_status(bool force)
 {
-	int last_bat_level = -1;
-	int last_gps_level = -1;
 	if (force) {
 		last_bat_level = -1;
 		last_gps_level = -1;
@@ -82,6 +82,7 @@ N3_UI::update_bat_gps_status(bool force)
 	int bat_level = (int)(((n3_bat.get_voltage() - N3_BAT_MIN_V)
 	                       / (N3_BAT_MAX_V-N3_BAT_MIN_V)) * 5.0);
 	bat_level = max(bat_level, 0);
+	bat_level = min(bat_level, 5);
 	
 	int gps_level = n3_gps.get_num_satellites();
 	

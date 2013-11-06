@@ -88,6 +88,9 @@ class N3_UI {
 		
 		// True only once the splash has been displayed for a reasonable period.
 		bool focused;
+		
+		int last_bat_level;
+		int last_gps_level;
 };
 
 #endif

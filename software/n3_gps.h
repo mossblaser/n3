@@ -52,6 +52,12 @@ class N3_GPS {
 		
 		
 		/**
+		 * Get the GPS receiver's average-MSL corrected altitude.
+		 */
+		double get_altitude(void);
+		
+		
+		/**
 		 * Get the current course (in degrees).
 		 */
 		double get_course(void);
