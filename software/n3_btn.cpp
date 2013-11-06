@@ -47,7 +47,7 @@ N3_Btn::update(void)
 		if (press_duration > BTN_MAX_JITTER_DURATION && press_duration < long_press_duration) {
 			// Indicate that a short press has occurred (long presses are reported
 			// further down)
-			short_pressed_flag = false;
+			short_pressed_flag = true;
 		}
 	} else if (new_state) {
 		// The button is being pressed, has it been a long press yet?
