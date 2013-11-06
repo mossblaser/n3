@@ -32,8 +32,20 @@ N3_UI::update(void)
 {
 	// Has the user short-pressed the button? (And thus wishes to advance the
 	// window)
-	if (!(windows[cur_window]->is_valid()) || n3_btn.short_pressed())
+	if (n3_btn.short_pressed())
 		next_window();
+	
+	// If the active window invalidates itself, we should start searching for
+	// windows from the start of the list.
+	// 
+	// Motivation: This means that if GPS is lost (for example) causing GPS
+	// windows to invalidate a "Searching for satellites" window at the start of
+	// the list and only valid when there is no satellite reception will be shown
+	// (rather than, say, the about screen which might appear next in the list).
+	if (!(windows[cur_window]->is_valid())) {
+		cur_window = -1;
+		next_window();
+	}
 	
 	if (!focused) {
 		// Has the splash been shown long enough yet?
