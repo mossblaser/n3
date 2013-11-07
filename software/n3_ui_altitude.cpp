@@ -63,8 +63,8 @@ bool
 N3_UI_SEA_Altitude_Window::is_valid(void)
 {
 	return n3_gps.is_fixed()
-	    //&& n3_gps.fix_type() == N3_GPS_3D_FIX
-	    && n3_gps.get_altitude() <= MINIMUM_REALISTIC_ALTITUDE_CM;
+	    && n3_gps.fix_type() == N3_GPS_3D_FIX
+	    && n3_gps.get_altitude() > MINIMUM_REALISTIC_ALTITUDE_CM;
 }
 
 
@@ -108,8 +108,8 @@ bool
 N3_UI_OSDN_Altitude_Window::is_valid(void)
 {
 	return n3_gps.is_fixed()
-	       //&& n3_gps.fix_type() == N3_GPS_3D_FIX
-	       && n3_gps.get_altitude() <= MINIMUM_REALISTIC_ALTITUDE_CM
+	       && n3_gps.fix_type() == N3_GPS_3D_FIX
+	       && n3_gps.get_altitude() > MINIMUM_REALISTIC_ALTITUDE_CM
 	       && n3_wgs84_to_os( n3_gps.get_coordinates()
 	                        , OS_TM_NATIONAL_GRID
 	                        , OS_GR_NATIONAL_GRID
@@ -162,7 +162,7 @@ N3_UI_IOSDN_Altitude_Window::is_valid(void)
 {
 	return n3_gps.is_fixed()
 	       && n3_gps.fix_type() == N3_GPS_3D_FIX
-	       && n3_gps.get_altitude() <= MINIMUM_REALISTIC_ALTITUDE_CM
+	       && n3_gps.get_altitude() > MINIMUM_REALISTIC_ALTITUDE_CM
 	       && n3_wgs84_to_os( n3_gps.get_coordinates()
 	                        , OS_TM_IRISH_NATIONAL_GRID
 	                        , OS_GR_IRISH_NATIONAL_GRID

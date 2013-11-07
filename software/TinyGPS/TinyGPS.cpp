@@ -201,9 +201,6 @@ bool TinyGPS::term_complete()
           _numsats          = _new_numsats;
           _hdop             = _new_hdop;
           break;
-        case _GPS_SENTENCE_GPGSA:
-          _fix_mode2 = _new_fix_mode2;
-          break;
         }
 
         return true;
@@ -243,7 +240,7 @@ bool TinyGPS::term_complete()
       _gps_data_good = _term[0] == 'A';
       break;
     case COMBINE(_GPS_SENTENCE_GPGSA, 2): // Mode2 (i.e. no fix, 2D fix, 3D fix)
-      _new_fix_mode2 = parse_decimal()/100;
+      _fix_mode2 = _term[0] - '0';
       break;
     case COMBINE(_GPS_SENTENCE_GPRMC, 3): // Latitude
     case COMBINE(_GPS_SENTENCE_GPGGA, 2):

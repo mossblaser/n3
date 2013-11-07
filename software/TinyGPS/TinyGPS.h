@@ -117,7 +117,7 @@ private:
   unsigned long  _hdop, _new_hdop;
   unsigned short _numsats, _new_numsats;
   
-  int _fix_mode2, _new_fix_mode2;
+  int _fix_mode2;
 
   unsigned long _last_time_fix, _new_time_fix;
   unsigned long _last_position_fix, _new_position_fix;
