@@ -23,6 +23,9 @@
 // For windows with several pages to show, how long should each page be shown?
 #define N3_PAGE_DURATION 3000ul
 
+// What is the minimum threshold for a HDOP value to be considered "excellent"?
+#define N3_GPS_EXCELLENT_HDOP 2.0
+
 // -----------------------------------------------------------------------------
 // Pins and device definitions
 // -----------------------------------------------------------------------------

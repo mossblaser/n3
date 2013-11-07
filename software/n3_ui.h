@@ -74,6 +74,18 @@ class N3_UI {
 		void next_window(void);
 		
 		/**
+		 * Returns an indication of battery level where 0 is low and 5 is high.
+		 */
+		int get_bat_level(void);
+		
+		/**
+		 * Returns an indication of GPS reception quality ranging from -1 to 3 where
+		 * -1 is no satellites, 0 is no fix, 1 is a 2D fix, 2 is a 3D fix and 3 is a
+		 * good 3D fix.
+		 */
+		int get_gps_level(void);
+		
+		/**
 		 * Draw the battery and GPS status icons to the LCD. If force is not false,
 		 * only draw if changed.
 		 */

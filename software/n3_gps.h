@@ -66,6 +66,12 @@ class N3_GPS {
 		
 		
 		/**
+		 * What is the current horizontal dilution of precision?
+		 */
+		double get_hdop(void);
+		
+		
+		/**
 		 * Get the WGS84 coordinates currently reported by the GPS receiver.
 		 */
 		os_lat_lon_t get_coordinates(void);

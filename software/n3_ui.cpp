@@ -68,23 +68,46 @@ N3_UI::update(void)
 	
 }
 
-
-void
-N3_UI::update_bat_gps_status(bool force)
+int
+N3_UI::get_bat_level(void)
 {
-	if (force) {
-		last_bat_level = -1;
-		last_gps_level = -1;
-	}
-	
-	// Show the battery level as nominally between 0 and 5 (but if greater assumed
-	// to be 5).
 	int bat_level = (int)(((n3_bat.get_voltage() - N3_BAT_MIN_V)
 	                       / (N3_BAT_MAX_V-N3_BAT_MIN_V)) * 5.0);
 	bat_level = max(bat_level, 0);
 	bat_level = min(bat_level, 5);
 	
-	int gps_level = n3_gps.get_num_satellites();
+	return bat_level;
+}
+
+
+int
+N3_UI::get_gps_level(void)
+{
+	if (n3_gps.get_num_satellites() == 0)
+		return -1;
+	else if (n3_gps.fix_type() == N3_GPS_NO_FIX)
+		return 0;
+	else if (n3_gps.fix_type() == N3_GPS_2D_FIX)
+		return 1;
+	else if (n3_gps.fix_type() == N3_GPS_3D_FIX)
+		return 2;
+	else if (n3_gps.fix_type() == N3_GPS_3D_FIX && n3_gps.get_hdop() < N3_GPS_EXCELLENT_HDOP)
+		return 3;
+	else
+		return -1;
+}
+
+
+void
+N3_UI::update_bat_gps_status(bool force)
+{
+	if (force) {
+		last_bat_level = -999;
+		last_gps_level = -999;
+	}
+	
+	int bat_level = get_bat_level();
+	int gps_level = get_gps_level();
 	
 	// Update display if required
 	if (bat_level != last_bat_level) {
@@ -104,12 +127,11 @@ N3_UI::update_bat_gps_status(bool force)
 	if (gps_level != last_gps_level) {
 		switch (gps_level) {
 			default:
-			case 5: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_3); break;
-			case 4: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_2); break;
-			case 3: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_1); break;
-			case 2: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_0); break;
-			case 1: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_0); break;
-			case 0: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_X); break;
+			case -1: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_X); break;
+			case  0: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_0); break;
+			case  1: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_1); break;
+			case  2: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_2); break;
+			case  3: n3_lcd.createChar(N3_UI_GPS_ICON_CHAR, N3_ICON_GPS_3); break;
 		}
 		n3_lcd.setCursor(N3_LCD_COLS-1, 1);
 		n3_lcd.write(N3_UI_GPS_ICON_CHAR);
