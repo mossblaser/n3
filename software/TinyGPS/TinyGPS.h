@@ -78,6 +78,9 @@ public:
   // horizontal dilution of precision in 100ths
   inline unsigned long hdop() { return _hdop; }
 
+  // What type of fix is being reported (1 = no fix, 2 = 2D fix, 3 = 3D fix)
+  inline int fix_mode2() { return _fix_mode2; }
+
   void f_get_position(float *latitude, float *longitude, unsigned long *fix_age = 0);
   void crack_datetime(int *year, byte *month, byte *day, 
     byte *hour, byte *minute, byte *second, byte *hundredths = 0, unsigned long *fix_age = 0);
@@ -100,7 +103,7 @@ public:
 #endif
 
 private:
-  enum {_GPS_SENTENCE_GPGGA, _GPS_SENTENCE_GPRMC, _GPS_SENTENCE_OTHER};
+  enum {_GPS_SENTENCE_GPGGA, _GPS_SENTENCE_GPRMC, _GPS_SENTENCE_GPGSA, _GPS_SENTENCE_OTHER};
 
   // properties
   unsigned long _time, _new_time;
@@ -113,6 +116,8 @@ private:
   unsigned long  _course, _new_course;
   unsigned long  _hdop, _new_hdop;
   unsigned short _numsats, _new_numsats;
+  
+  int _fix_mode2, _new_fix_mode2;
 
   unsigned long _last_time_fix, _new_time_fix;
   unsigned long _last_position_fix, _new_position_fix;

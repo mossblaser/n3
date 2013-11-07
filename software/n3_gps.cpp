@@ -41,6 +41,13 @@ N3_GPS::is_fixed(void)
 }
 
 
+n3_gps_fix_type_t
+N3_GPS::fix_type(void)
+{
+	return (n3_gps_fix_type_t)gps.fix_mode2();
+}
+
+
 int
 N3_GPS::get_num_satellites(void)
 {

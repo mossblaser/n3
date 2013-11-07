@@ -8,6 +8,8 @@
 #include "n3_ui_about.h"
 #include "n3_ui_satellites.h"
 #include "n3_ui_altitude.h"
+#include "n3_ui_grid_ref.h"
+#include "n3_ui_lat_lon.h"
 
 N3_UI_About_Window          n3_ui_about_window;
 N3_UI_Satellites_Window     n3_ui_satellites_window;
@@ -16,7 +18,17 @@ N3_UI_SEA_Altitude_Window   n3_ui_sea_altitude_window;
 N3_UI_OSDN_Altitude_Window  n3_ui_osdn_altitude_window;
 N3_UI_IOSDN_Altitude_Window n3_ui_iosdn_altitude_window;
 
+N3_UI_National_Grid_Grid_Ref_Window       n3_ui_ng_grid_ref_window;
+N3_UI_Irish_National_Grid_Grid_Ref_Window n3_ui_ing_grid_ref_window;
+
+N3_UI_WGS84_Lat_Lon_Window n3_ui_wgs84_lat_lon_window;
+
 N3_UI_Window *windows[] = {
+	&n3_ui_ng_grid_ref_window,
+	&n3_ui_ing_grid_ref_window,
+	
+	&n3_ui_wgs84_lat_lon_window,
+	
 	&n3_ui_osdn_altitude_window,
 	&n3_ui_iosdn_altitude_window,
 	&n3_ui_sea_altitude_window,

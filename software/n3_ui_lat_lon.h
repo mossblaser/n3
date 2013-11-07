@@ -1,22 +1,25 @@
 /**
- * Display information about visible satellites.
+ * Display latitude/longitude.
  */
 
-#ifndef N3_UI_SATELLITES_H
-#define N3_UI_SATELLITES_H
+#ifndef N3_UI_LAT_LON_H
+#define N3_UI_LAT_LON_H
 
 #include "n3_ui.h"
-#include "n3_gps.h"
+#include "os_coord/os_coord.h"
 
 
 
-class N3_UI_Satellites_Window : public N3_UI_Window {
+/**
+ * A pure virtual class providing a generic latitude/longitude viewer.
+ */
+class N3_UI_Lat_Lon_Window : public N3_UI_Window {
 	public:
 		/**
 		 * Indicates whether the window contains valid data. If false, it is only
 		 * legal to call is_valid() and unfocus().
 		 */
-		virtual bool is_valid(void) { return true; }
+		virtual bool is_valid(void);
 		
 		/**
 		 * Attempt to give this window focus.
@@ -33,7 +36,20 @@ class N3_UI_Satellites_Window : public N3_UI_Window {
 		 */
 		virtual void unfocus(void) { /* Nothing to do. */ }
 		
-		
+	protected:
+		/**
+		 * Return the current grid-reference
+		 */
+		virtual os_lat_lon_t get_lat_lon(void) = 0;
+	
+	private:
+		os_lat_lon_t last_lat_lon;
+};
+
+
+
+class N3_UI_WGS84_Lat_Lon_Window : public N3_UI_Lat_Lon_Window {
+	public:
 		/**
 		 * Returns a pointer to an array of 8 bytes containing the bitmap to display
 		 * on the left of the splash screen like so for a given character position:
@@ -49,10 +65,12 @@ class N3_UI_Satellites_Window : public N3_UI_Window {
 		 * the given line number.
 		 */
 		virtual const char *get_splash_text(int line_no);
-	
+		
 	protected:
-		int               last_num_sats;
-		n3_gps_fix_type_t last_fix_type;
+		/**
+		 * Return the current grid-reference
+		 */
+		virtual os_lat_lon_t get_lat_lon(void);
 };
 
 #endif

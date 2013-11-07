@@ -14,6 +14,12 @@
  */
 #define GPS_MAX_AGE 10000
 
+typedef enum n3_gps_fix_type {
+	N3_GPS_NO_FIX = 1,
+	N3_GPS_2D_FIX = 2,
+	N3_GPS_3D_FIX = 3,
+} n3_gps_fix_type_t;
+
 
 class N3_GPS {
 	public:
@@ -37,6 +43,12 @@ class N3_GPS {
 		 * Have we got a GPS fix?
 		 */
 		bool is_fixed(void);
+		
+		
+		/**
+		 * What type of fix do we have?
+		 */
+		n3_gps_fix_type_t fix_type(void);
 		
 		
 		/**

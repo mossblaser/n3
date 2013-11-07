@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define _GPRMC_TERM   "GPRMC"
 #define _GPGGA_TERM   "GPGGA"
+#define _GPGSA_TERM   "GPGSA"
 
 TinyGPS::TinyGPS()
   :  _time(GPS_INVALID_TIME)
@@ -38,6 +39,7 @@ TinyGPS::TinyGPS()
   ,  _course(GPS_INVALID_ANGLE)
   ,  _hdop(GPS_INVALID_HDOP)
   ,  _numsats(GPS_INVALID_SATELLITES)
+  ,  _fix_mode2(0)
   ,  _last_time_fix(GPS_INVALID_FIX_TIME)
   ,  _last_position_fix(GPS_INVALID_FIX_TIME)
   ,  _parity(0)
@@ -199,6 +201,9 @@ bool TinyGPS::term_complete()
           _numsats          = _new_numsats;
           _hdop             = _new_hdop;
           break;
+        case _GPS_SENTENCE_GPGSA:
+          _fix_mode2 = _new_fix_mode2;
+          break;
         }
 
         return true;
@@ -219,6 +224,8 @@ bool TinyGPS::term_complete()
       _sentence_type = _GPS_SENTENCE_GPRMC;
     else if (!gpsstrcmp(_term, _GPGGA_TERM))
       _sentence_type = _GPS_SENTENCE_GPGGA;
+    else if (!gpsstrcmp(_term, _GPGSA_TERM))
+      _sentence_type = _GPS_SENTENCE_GPGSA;
     else
       _sentence_type = _GPS_SENTENCE_OTHER;
     return false;
@@ -234,6 +241,9 @@ bool TinyGPS::term_complete()
       break;
     case COMBINE(_GPS_SENTENCE_GPRMC, 2): // GPRMC validity
       _gps_data_good = _term[0] == 'A';
+      break;
+    case COMBINE(_GPS_SENTENCE_GPGSA, 2): // Mode2 (i.e. no fix, 2D fix, 3D fix)
+      _new_fix_mode2 = parse_decimal()/100;
       break;
     case COMBINE(_GPS_SENTENCE_GPRMC, 3): // Latitude
     case COMBINE(_GPS_SENTENCE_GPGGA, 2):
