@@ -66,10 +66,6 @@ N3_UI_Grid_Ref_Window::update(void)
  ******************************************************************************/
 
 
-// TODO: Add Icon
-static uint8 XXX_NULL_ICON[8] = {21,21,21,21, 1,1,1,1};
-
-
 os_grid_ref_t
 N3_UI_National_Grid_Grid_Ref_Window::get_grid_ref(void)
 {
@@ -79,10 +75,12 @@ N3_UI_National_Grid_Grid_Ref_Window::get_grid_ref(void)
 	                     );
 }
 
+#include "n3_icons/os_grid_ref_window_splash.h"
+
 uint8 *
 N3_UI_National_Grid_Grid_Ref_Window::get_splash_icon(int char_num)
 {
-	return XXX_NULL_ICON;
+	return N3_ICON_OS_GRID_REF_WINDOW_SPLASH[char_num%3][char_num/3];
 }
 
 static const char *NG_SPLASH_TOP = "G-Ref";
@@ -116,7 +114,7 @@ N3_UI_Irish_National_Grid_Grid_Ref_Window::get_grid_ref(void)
 uint8 *
 N3_UI_Irish_National_Grid_Grid_Ref_Window::get_splash_icon(int char_num)
 {
-	return XXX_NULL_ICON;
+	return N3_ICON_OS_GRID_REF_WINDOW_SPLASH[char_num%3][char_num/3];
 }
 
 static const char *ING_SPLASH_TOP = "G-Ref";

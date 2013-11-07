@@ -59,15 +59,11 @@ N3_UI_Altitude_Window::update(void)
  * WGS84 Altitude
  ******************************************************************************/
 
-
-// TODO: Add Icon
-static uint8 XXX_NULL_ICON[8] = {21,21,21,21, 1,1,1,1};
-
 bool
 N3_UI_SEA_Altitude_Window::is_valid(void)
 {
 	return n3_gps.is_fixed()
-	    && n3_gps.fix_type() == N3_GPS_3D_FIX
+	    //&& n3_gps.fix_type() == N3_GPS_3D_FIX
 	    && n3_gps.get_altitude() <= MINIMUM_REALISTIC_ALTITUDE_CM;
 }
 
@@ -78,10 +74,12 @@ N3_UI_SEA_Altitude_Window::get_altitude(void)
 	return n3_gps.get_altitude();
 }
 
+#include "n3_icons/wgs_altitude_window_splash.h"
+
 uint8 *
 N3_UI_SEA_Altitude_Window::get_splash_icon(int char_num)
 {
-	return XXX_NULL_ICON;
+	return N3_ICON_WGS_ALTITUDE_WINDOW_SPLASH[char_num%3][char_num/3];
 }
 
 static const char *WGS84_SPLASH_TOP = "Alt. ";
@@ -110,7 +108,7 @@ bool
 N3_UI_OSDN_Altitude_Window::is_valid(void)
 {
 	return n3_gps.is_fixed()
-	       && n3_gps.fix_type() == N3_GPS_3D_FIX
+	       //&& n3_gps.fix_type() == N3_GPS_3D_FIX
 	       && n3_gps.get_altitude() <= MINIMUM_REALISTIC_ALTITUDE_CM
 	       && n3_wgs84_to_os( n3_gps.get_coordinates()
 	                        , OS_TM_NATIONAL_GRID
@@ -129,10 +127,12 @@ N3_UI_OSDN_Altitude_Window::get_altitude(void)
 	return grid_ref.h;
 }
 
+#include "n3_icons/os_altitude_window_splash.h"
+
 uint8 *
 N3_UI_OSDN_Altitude_Window::get_splash_icon(int char_num)
 {
-	return XXX_NULL_ICON;
+	return N3_ICON_OS_ALTITUDE_WINDOW_SPLASH[char_num%3][char_num/3];
 }
 
 static const char *OSDN_SPLASH_TOP = "Alt. ";
@@ -180,10 +180,12 @@ N3_UI_IOSDN_Altitude_Window::get_altitude(void)
 	return grid_ref.h;
 }
 
+#include "n3_icons/os_altitude_window_splash.h"
+
 uint8 *
 N3_UI_IOSDN_Altitude_Window::get_splash_icon(int char_num)
 {
-	return XXX_NULL_ICON;
+	return N3_ICON_OS_ALTITUDE_WINDOW_SPLASH[char_num%3][char_num/3];
 }
 
 static const char *IOSDN_SPLASH_TOP = "Alt. ";

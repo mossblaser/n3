@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <wirish/wirish.h>
+
 #include "n3_gps.h"
 
 #include "TinyGPS/TinyGPS.h"
@@ -20,14 +23,40 @@ void
 N3_GPS::begin(void)
 {
 	serial->begin(baudrate);
+	
+	// Set frequency of position calculation to 1Hz
+	char set_fix_freq_cmd[] = "$PMTK300,1000,0,0,0,0*??\r\n";
+	add_checksum(set_fix_freq_cmd);
+	serial->print(set_fix_freq_cmd);
+	
+	// Send RMC, GGA, GSA messages only
+	// Field: 0 NMEA_SEN_GLL -----------,
+	// Field: 1 NMEA_SEN_RMC -----------+-,
+	// Field: 2 NMEA_SEN_VTG -----------+-+-,
+	// Field: 3 NMEA_SEN_GGA -----------+-+-+-,
+	// Field: 4 NMEA_SEN_GSA -----------+-+-+---,
+	// Field: 5 NMEA_SEN_GSV -----------+-+-+-+-+-,
+	// Field: 6 NMEA_SEN_GRS -----------+-+-+-+-+-+-,
+	// Field: 7 NMEA_SEN_GST -----------+-+-+-+-+-+-+-,
+	// Field: 13 NMEA_SEN_MALM ---------+-+-+-+-+-+-+-+-----------,
+	// Field: 14 NMEA_SEN_MEPH ---------+-+-+-+-+-+-+-+-----------+-,
+	// Field: 15 NMEA_SEN_MDGP ---------+-+-+-+-+-+-+-+-----------+-+-,
+	// Field: 16 NMEA_SEN_MDBG ---------+-+-+-+-+-+-+-+-----------+-+-+-,
+	// Field: 17 NMEA_SEN_ZDA ----------+-+-+-+-+-+-+-+-----------+-+-+-+-,
+	// Field: 18 NMEA_SEN_MCHN ---------+-+-+-+-+-+-+-+-----------+-+-+-+-+-,
+	//                                  | | | | | | | |           | | | | | |
+	char set_msg_freq_cmd[] = "$PMTK314,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0*??\r\n";
+	add_checksum(set_msg_freq_cmd);
+	serial->print(set_msg_freq_cmd);
 }
 
 
 void
 N3_GPS::update(void)
 {
-	while (serial->available())
+	while (serial->available()) {
 		gps.encode(serial->read());
+	}
 }
 
 
@@ -110,4 +139,21 @@ N3_GPS::get_datetime(int *yr_, int *mo_, int *dy_, int *hr_, int *mi_, int *se_)
 	*hr_ = hr;
 	*mi_ = mi;
 	*se_ = se;
+}
+
+
+
+void
+N3_GPS::add_checksum(char *nema_string)
+{
+	int checksum = 0;
+	
+	// Skip the initial dollar
+	nema_string++;
+	
+	while(*nema_string != '*')
+		checksum ^= (int)(*nema_string++);
+	
+	// Skip the star and add the checksum
+	snprintf(++nema_string, 5, "%02X\r\n", checksum);
 }

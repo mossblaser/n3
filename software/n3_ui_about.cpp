@@ -82,17 +82,16 @@ N3_UI_About_Window::update(void)
 }
 
 
-// TODO: Add Icon
-static uint8 XXX_NULL_ICON[8] = {1,1,1,1, 1,1,1,1};
+#include "n3_icons/about_window_splash.h"
 
 uint8 *
 N3_UI_About_Window::get_splash_icon(int char_num)
 {
-	return XXX_NULL_ICON;
+	return N3_ICON_ABOUT_WINDOW_SPLASH[char_num%3][char_num/3];
 }
 
 static const char *SPLASH_TOP = "About";
-static const char *SPLASH_BTM = " N3  ";
+static const char *SPLASH_BTM = "N3   ";
 
 const char *
 N3_UI_About_Window::get_splash_text(int line_no)

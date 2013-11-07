@@ -57,12 +57,8 @@ N3_UI_Lat_Lon_Window::update(void)
 
 
 /******************************************************************************
- * National Grid Location
+ * WGS84 Coordinates
  ******************************************************************************/
-
-
-// TODO: Add Icon
-static uint8 XXX_NULL_ICON[8] = {21,21,21,21, 1,1,1,1};
 
 
 os_lat_lon_t
@@ -71,10 +67,13 @@ N3_UI_WGS84_Lat_Lon_Window::get_lat_lon(void)
 	return n3_gps.get_coordinates();
 }
 
+
+#include "n3_icons/wgs_lat_lon_window_splash.h"
+
 uint8 *
 N3_UI_WGS84_Lat_Lon_Window::get_splash_icon(int char_num)
 {
-	return XXX_NULL_ICON;
+	return N3_ICON_WGS_LAT_LON_WINDOW_SPLASH[char_num%3][char_num/3];
 }
 
 static const char *WGS84_SPLASH_TOP = "Lt/Ln";

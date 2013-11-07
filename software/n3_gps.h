@@ -90,6 +90,13 @@ class N3_GPS {
 		HardwareSerial *serial;
 		uint32 baudrate;
 		TinyGPS gps;
+		
+		/**
+		 * Given a nema sentence which starts with $ and ends with *xx\r\n\0 where "xx"
+		 * means any two bytes, modifies the string to contain the checksum where xx
+		 * were.
+		 */
+		void add_checksum(char *nema_string);
 };
 
 

@@ -48,17 +48,15 @@ N3_UI_Satellites_Window::update(void)
 	last_fix_type = fix_type;
 }
 
-
-// TODO: Add Icon
-static uint8 XXX_NULL_ICON[8] = {5,5,5,5, 5,5,5,5};
+#include "n3_icons/satellite_window_splash.h"
 
 uint8 *
 N3_UI_Satellites_Window::get_splash_icon(int char_num)
 {
-	return XXX_NULL_ICON;
+	return N3_ICON_SATELLITE_WINDOW_SPLASH[char_num%3][char_num/3];
 }
 
-static const char *SPLASH_TOP = "Sat  ";
+static const char *SPLASH_TOP = "Sat. ";
 static const char *SPLASH_BTM = "Info ";
 
 const char *
