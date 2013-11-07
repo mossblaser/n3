@@ -18,7 +18,8 @@ n3_icons: n3_icons/about_window_splash.h        \
           n3_icons/png_to_lcd_chars.py          \
           n3_icons/satellite_window_splash.h    \
           n3_icons/wgs_altitude_window_splash.h \
-          n3_icons/wgs_lat_lon_window_splash.h
+          n3_icons/wgs_lat_lon_window_splash.h  \
+          n3_icons/datetime_window_splash.h
 
 
 # === You don't have to edit anything below this line ==========================

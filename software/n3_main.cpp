@@ -10,9 +10,11 @@
 #include "n3_ui_altitude.h"
 #include "n3_ui_grid_ref.h"
 #include "n3_ui_lat_lon.h"
+#include "n3_ui_datetime.h"
 
-N3_UI_About_Window          n3_ui_about_window;
-N3_UI_Satellites_Window     n3_ui_satellites_window;
+N3_UI_About_Window      n3_ui_about_window;
+N3_UI_Satellites_Window n3_ui_satellites_window;
+N3_UI_Datetime_Window   n3_ui_datetime_window;
 
 N3_UI_SEA_Altitude_Window   n3_ui_sea_altitude_window;
 N3_UI_OSDN_Altitude_Window  n3_ui_osdn_altitude_window;
@@ -33,8 +35,8 @@ N3_UI_Window *windows[] = {
 	&n3_ui_iosdn_altitude_window,
 	&n3_ui_sea_altitude_window,
 	
+	&n3_ui_datetime_window,
 	&n3_ui_satellites_window,
-	
 	&n3_ui_about_window,
 };
 int num_windows = sizeof(windows)/sizeof(N3_UI_Window *);
