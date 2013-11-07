@@ -3,7 +3,7 @@
 #include <wirish/wirish.h>
 
 
-void do_nothing_isr(void)
+static void do_nothing_isr(void)
 {
 	// Do nothing...
 }

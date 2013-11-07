@@ -25,6 +25,7 @@ LiquidCrystal n3_lcd( N3_LCD_RS_PIN
                     );
 
 N3_GPS n3_gps( &n3_gps_serial
+             , N3_GPS_SERIAL_DMA_SRC
              , N3_GPS_BAUDRATE
              );
 

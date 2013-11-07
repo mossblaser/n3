@@ -5,6 +5,8 @@
 #ifndef N3_GPS_H
 #define N3_GPS_H
 
+#include <libmaple/dma.h>
+
 #include "TinyGPS/TinyGPS.h"
 #include "os_coord/os_coord.h"
 
@@ -13,6 +15,11 @@
  * considered stale and thus invalid.
  */
 #define GPS_MAX_AGE 10000
+
+/**
+ * Size of the circular buffer used to keep received DMA'd serial data.
+ */
+#define N3_GPS_DMA_BUFFER_SIZE 1024
 
 typedef enum n3_gps_fix_type {
 	N3_GPS_NO_FIX = 1,
@@ -27,6 +34,7 @@ class N3_GPS {
 		 * Set everything up. Sets the given serial port's baudrate.
 		 */
 		N3_GPS( HardwareSerial *serial
+		      , dma_request_src serial_dma_src
 		      , uint32          baudrate
 		      );
 		
@@ -88,8 +96,24 @@ class N3_GPS {
 	
 	protected:
 		HardwareSerial *serial;
+		dma_request_src serial_dma_src;
+		
 		uint32 baudrate;
 		TinyGPS gps;
+		
+		// A buffer into which serial data from the GPS will be DMA'd
+		char dma_buffer[N3_GPS_DMA_BUFFER_SIZE];
+		
+		// An offset into the dma_buffer which indicates the next unread character.
+		// If equal to the position to the DMA controller's 
+		int  dma_buffer_read_head;
+		
+		/**
+		 * Return the current offset into the dma_buffer the DMA controller is
+		 * pointing at. This is the offset into the dma_buffer which will next be
+		 * written to by the DMA controller.
+		 */
+		int get_dma_buffer_write_head(void);
 		
 		/**
 		 * Given a nema sentence which starts with $ and ends with *xx\r\n\0 where "xx"
