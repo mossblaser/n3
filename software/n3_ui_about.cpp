@@ -22,10 +22,11 @@ void
 N3_UI_About_Window::update(void)
 {
 	// Advance the pages
-	if (page_num < 0 || millis() - last_change > N3_PAGE_DURATION) {
+	if (page_num < 0 || millis() - last_change >= N3_PAGE_DURATION) {
 		page_num += 1;
 		page_num %= NUM_PAGES;
 		last_change = millis();
+		n3_sleep.no_longer_than(N3_WAKEUP_UI, N3_PAGE_DURATION);
 		
 		n3_lcd.home();
 		switch (page_num) {

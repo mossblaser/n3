@@ -12,7 +12,7 @@
 // -----------------------------------------------------------------------------
 
 // How frequently should the UI be refreshed in the worst case? (msec)
-#define N3_UI_UPDATE_PERIOD 500
+#define N3_UI_UPDATE_PERIOD 1100
 
 // How long should the button be pressed to count as a long press (msec)
 #define N3_BTN_LONG_PRESS_DURATION 500ul

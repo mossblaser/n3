@@ -17,9 +17,10 @@
 #define GPS_MAX_AGE 10000
 
 /**
- * Size of the circular buffer used to keep received DMA'd serial data.
+ * Size of the circular buffer used to keep received DMA'd serial data. Should
+ * be big enough to accept just a bit more than three messages
  */
-#define N3_GPS_DMA_BUFFER_SIZE 1024
+#define N3_GPS_DMA_BUFFER_SIZE 512
 
 typedef enum n3_gps_fix_type {
 	N3_GPS_NO_FIX = 1,

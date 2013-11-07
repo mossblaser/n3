@@ -9,7 +9,10 @@
 #include "os_coord/os_coord.h"
 #include "os_coord/os_coord_math.h"
 
+#include "n3.h"
+#include "n3_globals.h"
 #include "n3_gps.h"
+#include "n3_sleep.h"
 
 
 // Convenient name for the DMA controller connected ot the USARTs
@@ -32,8 +35,10 @@
 
 static void do_nothing_isr(void)
 {
-	// Do nothing (except for clearing the bits indicating the progress of the DMA!)
+	// Do nothing (except for clearing the bits indicating the progress of the
+	// DMA!) and wake up the mainloop
 	dma_clear_isr_bits(USART_DMA_DEV, USART_RX_DMA_TUBE);
+	n3_sleep.no_more(N3_WAKEUP_GPS);
 }
 
 

@@ -51,7 +51,7 @@ N3_UI::update(void)
 	
 	if (!focused) {
 		// Has the splash been shown long enough yet?
-		if (millis() - switch_time > N3_SPLASH_DURATION) {
+		if (millis() - switch_time >= N3_SPLASH_DURATION) {
 			n3_lcd.clear();
 			windows[cur_window]->focus();
 			update_bat_gps_status(true);
@@ -170,6 +170,7 @@ N3_UI::next_window(void)
 				n3_lcd.print(windows[cur_window]->get_splash_text(i));
 			}
 			
+			n3_sleep.no_longer_than(N3_WAKEUP_UI, N3_SPLASH_DURATION);
 			switch_time = millis();
 			focused     = false;
 			

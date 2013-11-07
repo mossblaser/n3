@@ -67,6 +67,7 @@ cppSRCS_$(d) += n3_globals.cpp
 cppSRCS_$(d) += n3_bat.cpp
 cppSRCS_$(d) += n3_gps.cpp
 cppSRCS_$(d) += n3_btn.cpp
+cppSRCS_$(d) += n3_sleep.cpp
 
 cppSRCS_$(d) += n3_wgs84_to_os.cpp
 

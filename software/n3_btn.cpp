@@ -1,3 +1,6 @@
+#include "n3.h"
+#include "n3_globals.h"
+#include "n3_sleep.h"
 #include "n3_btn.h"
 
 #include <wirish/wirish.h>
@@ -5,7 +8,7 @@
 
 static void do_nothing_isr(void)
 {
-	// Do nothing...
+	n3_sleep.no_more(N3_WAKEUP_BTN);
 }
 
 
@@ -41,6 +44,7 @@ N3_Btn::update(void)
 		// The button has just started being pressed
 		last_pressed = millis();
 		long_pressed_flag_occurred = false;
+		n3_sleep.no_longer_than(N3_WAKEUP_BTN, N3_BTN_LONG_PRESS_DURATION);
 	} else if (last_state && !new_state) {
 		// The button has just been released
 		unsigned long press_duration = millis() - last_pressed;

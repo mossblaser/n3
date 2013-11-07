@@ -3,6 +3,7 @@
 
 #include "n3.h"
 #include "n3_globals.h"
+#include "n3_sleep.h"
 
 #include "n3_ui.h"
 #include "n3_ui_about.h"
@@ -54,6 +55,11 @@ int main(void)
 		n3_gps.update();
 		n3_btn.update();
 		n3_ui.update();
+		
+		// Go to sleep until an interrupt wakes us up again (since systick is
+		// enabled, we'll be woken every ms anyway)
+		n3_sleep.no_longer_than(N3_WAKEUP_REFRESH, N3_UI_UPDATE_PERIOD);
+		n3_sleep.sleep_now();
 	}
 	
 	return 0;
