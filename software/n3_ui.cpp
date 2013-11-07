@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "n3_ui.h"
 #include "n3_globals.h"
 
@@ -154,25 +156,31 @@ N3_UI::next_window(void)
 		cur_window %= num_windows;
 		
 		if (windows[cur_window]->is_valid()) {
-			// Clear and show the splash for this valid window
+			// Clear and show the splash (if available) for this valid window
 			n3_lcd.clear();
 			
-			// Display the icon
-			for (int i = 0; i < 6; i++) {
-				n3_lcd.createChar(i, windows[cur_window]->get_splash_icon(i));
-				n3_lcd.setCursor(i%3, i/3);
-				n3_lcd.write(i);
+			if (strlen(windows[cur_window]->get_splash_text(0))) {
+				// Display the icon
+				for (int i = 0; i < 6; i++) {
+					n3_lcd.createChar(i, windows[cur_window]->get_splash_icon(i));
+					n3_lcd.setCursor(i%3, i/3);
+					n3_lcd.write(i);
+				}
+				
+				// Display the text
+				for (int i = 0; i < 2; i++) {
+					n3_lcd.setCursor(3, i);
+					n3_lcd.print(windows[cur_window]->get_splash_text(i));
+				}
+				
+				n3_sleep.no_longer_than(N3_WAKEUP_UI, N3_SPLASH_DURATION);
+				switch_time = millis();
+				focused     = false;
+			} else {
+				// No splash, show this window straight away
+				switch_time = millis() + N3_SPLASH_DURATION;
+				focused = false;
 			}
-			
-			// Display the text
-			for (int i = 0; i < 2; i++) {
-				n3_lcd.setCursor(3, i);
-				n3_lcd.print(windows[cur_window]->get_splash_text(i));
-			}
-			
-			n3_sleep.no_longer_than(N3_WAKEUP_UI, N3_SPLASH_DURATION);
-			switch_time = millis();
-			focused     = false;
 			
 			return;
 		}

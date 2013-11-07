@@ -12,6 +12,7 @@
 #include "n3_ui_grid_ref.h"
 #include "n3_ui_lat_lon.h"
 #include "n3_ui_datetime.h"
+#include "n3_ui_no_fix.h"
 
 N3_UI_About_Window      n3_ui_about_window;
 N3_UI_Satellites_Window n3_ui_satellites_window;
@@ -26,7 +27,11 @@ N3_UI_Irish_National_Grid_Grid_Ref_Window n3_ui_ing_grid_ref_window;
 
 N3_UI_WGS84_Lat_Lon_Window n3_ui_wgs84_lat_lon_window;
 
+N3_UI_No_Fix_Window n3_ui_no_fix_window;
+
 N3_UI_Window *windows[] = {
+	&n3_ui_no_fix_window,
+	
 	&n3_ui_ng_grid_ref_window,
 	&n3_ui_ing_grid_ref_window,
 	

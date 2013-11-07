@@ -78,6 +78,7 @@ cppSRCS_$(d) += n3_ui_altitude.cpp
 cppSRCS_$(d) += n3_ui_grid_ref.cpp
 cppSRCS_$(d) += n3_ui_lat_lon.cpp
 cppSRCS_$(d) += n3_ui_datetime.cpp
+cppSRCS_$(d) += n3_ui_no_fix.cpp
 
 cppSRCS_$(d) += TinyGPS/TinyGPS.cpp
 

@@ -11,15 +11,20 @@ MEMORY_TARGET ?= flash
 # For compiling the icons
 n3_icons/%.h: n3_icons/%.png
 	python n3_icons/png_to_lcd_chars.py $< > $@
-n3_icons: n3_icons/about_window_splash.h        \
-          n3_icons/altitude_window_splash.h     \
-          n3_icons/os_altitude_window_splash.h  \
-          n3_icons/os_grid_ref_window_splash.h  \
-          n3_icons/png_to_lcd_chars.py          \
-          n3_icons/satellite_window_splash.h    \
-          n3_icons/wgs_altitude_window_splash.h \
-          n3_icons/wgs_lat_lon_window_splash.h  \
-          n3_icons/datetime_window_splash.h
+n3_icons: n3_icons/about_window_splash.h         \
+          n3_icons/altitude_window_splash.h      \
+          n3_icons/os_altitude_window_splash.h   \
+          n3_icons/os_grid_ref_window_splash.h   \
+          n3_icons/png_to_lcd_chars.py           \
+          n3_icons/satellite_window_splash.h     \
+          n3_icons/wgs_altitude_window_splash.h  \
+          n3_icons/wgs_lat_lon_window_splash.h   \
+          n3_icons/datetime_window_splash.h      \
+          n3_icons/no_fix_window_graphic.h       \
+          n3_icons/no_fix_beam0_window_graphic.h \
+          n3_icons/no_fix_beam1_window_graphic.h \
+          n3_icons/no_fix_beam2_window_graphic.h \
+          n3_icons/no_fix_beam3_window_graphic.h
 
 
 # === You don't have to edit anything below this line ==========================
