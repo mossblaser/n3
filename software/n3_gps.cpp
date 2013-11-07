@@ -53,6 +53,8 @@ void
 N3_GPS::begin(void)
 {
 	serial->begin(baudrate);
+	// Enable the USART's DMA signal for its receiver
+	serial->c_dev()->regs->CR3 = USART_CR3_DMAR;
 	
 	// Set frequency of position calculation to 1Hz
 	char set_fix_freq_cmd[] = "$PMTK300,1000,0,0,0,0*??\r\n";
@@ -89,36 +91,35 @@ N3_GPS::begin(void)
 	// Start the DMA controller for the USART's events
 	dma_init(USART_DMA_DEV);
 	
-	// Setup a the DMA controller's configuration
-	dma_tube_config tube_config = {
-		// We're reading from the serial port's data register
-		/*.tube_src =*/ &(serial->c_dev()->regs->DR),
-		
-		// Grab the 8-bit value in the register
-		/*.tube_src_size =*/ DMA_SIZE_8BITS,
-		
-		// Put stuff into the DMA buffer
-		/*.tube_dst =*/ dma_buffer,
-		
-		// ...which takes 8-bit values too
-		/*.tube_dst_size =*/ DMA_SIZE_8BITS,
-		
-		// Use the whole buffer
-		/*.tube_nr_xfers =*/ N3_GPS_DMA_BUFFER_SIZE,
-		
-		// Flags:
-		// - DMA_CFG_DST_INC: Fill the buffer stepping forward after each value
-		// - DMA_CFG_CIRC: The buffer is a circular buffer
-		// - DMA_CFG_CMPLT_IE interrupt when the buffer is filled completely
-		// - DMA_CFG_HALF_CMPLT_IE interrupt when the buffer is half full
-		/*.tube_flags =*/ DMA_CFG_DST_INC | DMA_CFG_CIRC | DMA_CFG_CMPLT_IE | DMA_CFG_HALF_CMPLT_IE,
-		
-		// Always null (microcontroller specific only values here)
-		/*.target_data =*/ NULL,
-		
-		// The DMA events to listen for are those from the USART.
-		/*.tube_req_src =*/ serial_dma_src,
-	};
+	dma_tube_config tube_config;
+	// We're reading from the serial port's data register
+	tube_config.tube_src = &(serial->c_dev()->regs->DR);
+	
+	// Grab the 8-bit value in the register
+	tube_config.tube_src_size = DMA_SIZE_8BITS;
+	
+	// Put stuff into the DMA buffer
+	tube_config.tube_dst = dma_buffer;
+	
+	// ...which takes 8-bit values too
+	tube_config.tube_dst_size = DMA_SIZE_8BITS;
+	
+	// Use the whole buffer
+	tube_config.tube_nr_xfers = N3_GPS_DMA_BUFFER_SIZE;
+	
+	// Flags:
+	// - DMA_CFG_DST_INC: Fill the buffer stepping forward after each value
+	// - DMA_CFG_CIRC: The buffer is a circular buffer
+	// - DMA_CFG_CMPLT_IE interrupt when the buffer is filled completely
+	// - DMA_CFG_HALF_CMPLT_IE interrupt when the buffer is half full
+	tube_config.tube_flags = DMA_CFG_DST_INC | DMA_CFG_CIRC | DMA_CFG_CMPLT_IE | DMA_CFG_HALF_CMPLT_IE;
+	
+	// Always null (microcontroller specific only values here)
+	tube_config.target_data = NULL;
+	
+	// The DMA events to listen for are those from the USART.
+	tube_config.tube_req_src = serial_dma_src;
+	
 	int status = dma_tube_cfg(USART_DMA_DEV, USART_RX_DMA_TUBE, &tube_config);
 	ASSERT(status == DMA_TUBE_CFG_SUCCESS);
 	
