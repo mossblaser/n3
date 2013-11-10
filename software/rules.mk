@@ -15,6 +15,7 @@ include $(MAKEDIR)/header.mk
 
 PROJECT_BUILD_DIRS := os_coord
 PROJECT_BUILD_DIRS += TinyGPS
+PROJECT_BUILD_DIRS += maple_sdfat
 
 BUILDDIRS += $(addprefix $(BUILD_PATH)/$(d)/, $(PROJECT_BUILD_DIRS))
 
@@ -80,7 +81,13 @@ cppSRCS_$(d) += n3_ui_lat_lon.cpp
 cppSRCS_$(d) += n3_ui_datetime.cpp
 cppSRCS_$(d) += n3_ui_no_fix.cpp
 
+# Tiny GPS
 cppSRCS_$(d) += TinyGPS/TinyGPS.cpp
+
+# maple_sdfat
+cppSRCS_$(d) += maple_sdfat/Sd2Card.cpp
+cppSRCS_$(d) += maple_sdfat/SdFile.cpp
+cppSRCS_$(d) += maple_sdfat/SdVolume.cpp
 
 # sSRCS_$(d) are the assembly sources. We don't have any.
 sSRCS_$(d) :=
