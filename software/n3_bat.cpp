@@ -14,7 +14,7 @@ N3_Bat::N3_Bat( uint8 pin_
               , double a_ref_v
               )
 : pin(pin_)
-, a_in_to_v(((r2/(r1+r2))*a_ref_v) / 1024.0)
+, a_in_to_v( ((r1+r2)/r2) * (a_ref_v/4096.0) )
 {
 	// Nothing to do
 }

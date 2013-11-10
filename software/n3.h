@@ -52,11 +52,18 @@
 
 // Battery voltage input
 #define N3_BAT_V_PIN 3
-#define N3_BAT_V_DIV_R1 50000.0
-#define N3_BAT_V_DIV_R2 50000.0
+#define N3_BAT_V_DIV_R1 2200.0
+#define N3_BAT_V_DIV_R2 3300.0
 
-#define N3_BAT_MIN_V 2.4
-#define N3_BAT_MAX_V 2.8
+// In practice the system will "happily" run down to about 1.5v but since the
+// battery voltage curve gets steep at about 2v (1v each) this seems like a good
+// time to say "empty" for safety purposes.
+#define N3_BAT_MIN_V 2.0
+
+// A fresh set of batteries should be around 3.6 but they quickly drop from this
+// before entering a more linear discharge period so it makes sense to keep this
+// slightly lower than you'd expect.
+#define N3_BAT_MAX_V 3.3
 
 // Button
 #define N3_BTN_PIN 10
