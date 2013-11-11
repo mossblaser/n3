@@ -63,7 +63,7 @@
 // A fresh set of batteries should be around 3.6 but they quickly drop from this
 // before entering a more linear discharge period so it makes sense to keep this
 // slightly lower than you'd expect.
-#define N3_BAT_MAX_V 3.3
+#define N3_BAT_MAX_V 2.85
 
 // Button
 #define N3_BTN_PIN 10
