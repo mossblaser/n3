@@ -1,4 +1,3 @@
-//$fs = 0.5;
 
 ////////////////////////////////////////////////////////////////////////////////
 // LCD
@@ -396,17 +395,89 @@ module case() {
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// Halves of a hollow container
+////////////////////////////////////////////////////////////////////////////////
+
+// size: The size of the box [w,h,t]
+// wall_thickness: Thicknesses of the walls of the box
+// joint_size: The size of the joint
+// female: Is this the female part of the box?
+// radius: The radius of the rounding of the corners
+module box_half(size, wall_thickness, joint_size, female, radius) {
+	union() {
+		// The box itself
+		difference() {
+			round_cube([size[0], size[1], size[2]+radius], [radius,radius, radius]);
+			
+			// Chop the rounded corners off
+			translate([0,0,size[2]])
+				cube([size[0], size[1], radius]);
+			
+			
+			// Hollow out the inside
+			translate([wall_thickness, wall_thickness, wall_thickness])
+				cube([ size[0] - (wall_thickness*2)
+				     , size[1] - (wall_thickness*2)
+				     , size[2]
+				     ]);
+		}
+		
+		// Create the joint
+		if (!female) {
+			difference() {
+				translate([wall_thickness/3, wall_thickness/3, size[2]])
+					cube([ size[0] - (2*(wall_thickness/3))
+					     , size[1] - (2*(wall_thickness/3))
+					     , joint_size
+					     ]);
+				
+				translate([2*(wall_thickness/3), 2*(wall_thickness/3), size[2] - 1])
+					cube([ size[0] - (4*(wall_thickness/3))
+					     , size[1] - (4*(wall_thickness/3))
+					     , joint_size + 2
+					     ]);
+			}
+		} else {
+			union() {
+				// Inner lip
+				difference() {
+					translate([2*(wall_thickness/3), 2*(wall_thickness/3), size[2]])
+						cube([ size[0] - (4*(wall_thickness/3))
+						     , size[1] - (4*(wall_thickness/3))
+						     , joint_size
+						     ]);
+					
+					translate([wall_thickness, wall_thickness, size[2] - 1])
+						cube([ size[0] - 2*wall_thickness
+						     , size[1] - 2*wall_thickness
+						     , joint_size + 2
+						     ]);
+					
+				}
+				
+				// Outer Lip
+				difference() {
+					intersection() {
+						translate([0,0,size[2]-radius])
+							round_cube([size[0],size[1],joint_size+(radius*2)], [radius,radius,radius]);
+						translate([0,0,size[2]])
+							cube([size[0],size[1],joint_size]);
+					}
+					
+					translate([wall_thickness/3, wall_thickness/3, size[2]-1])
+						cube([ size[0] - (2*(wall_thickness/3))
+						     , size[1] - (2*(wall_thickness/3))
+						     , joint_size + 2
+						     ]);
+				}
+			}
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
 // Experimentation
 ////////////////////////////////////////////////////////////////////////////////
 
-
-translate([70, 30, 30]) {
-	translate([0*60, 0, 0]) lcd();
-	translate([0, -LCD_BOARD_HEIGHT, -BAT_THICKNESS - 5]) batteries();
-	translate([0, -GPS_BOARD_HEIGHT, 0]) gps();
-	translate([GPS_BOARD_WIDTH + 2, -PWR_BOARD_HEIGHT, 0]) power();
-	
-	translate([GPS_BOARD_WIDTH, -MPL_BOARD_HEIGHT/2, -2*(MPL_BOARD_THICKNESS+MPL_USB_THICKNESS)]) maple();
-}
-
-case();
+box_half([55,90,20], 5, 4, true, 3);
