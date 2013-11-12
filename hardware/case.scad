@@ -401,9 +401,13 @@ module case() {
 // size: The size of the box [w,h,t]
 // wall_thickness: Thicknesses of the walls of the box
 // joint_size: The size of the joint
+// joint_tollerance: Size of a gap added as extra around the join.
 // female: Is this the female part of the box?
 // radius: The radius of the rounding of the corners
-module box_half(size, wall_thickness, joint_size, female, radius) {
+module box_half(size, wall_thickness, joint_size, joint_tollerance, female, radius) {
+	// Half is in the top, half in the bottom
+	joint_tollerance = joint_tollerance / 2;
+	
 	union() {
 		// The box itself
 		difference() {
@@ -425,15 +429,15 @@ module box_half(size, wall_thickness, joint_size, female, radius) {
 		// Create the joint
 		if (!female) {
 			difference() {
-				translate([wall_thickness/3, wall_thickness/3, size[2]])
-					cube([ size[0] - (2*(wall_thickness/3))
-					     , size[1] - (2*(wall_thickness/3))
+				translate([wall_thickness/3 + joint_tollerance/4, wall_thickness/3 + joint_tollerance/4, size[2]])
+					cube([ size[0] - (2*(wall_thickness/3)) - joint_tollerance/2
+					     , size[1] - (2*(wall_thickness/3)) - joint_tollerance/2
 					     , joint_size
 					     ]);
 				
-				translate([2*(wall_thickness/3), 2*(wall_thickness/3), size[2] - 1])
-					cube([ size[0] - (4*(wall_thickness/3))
-					     , size[1] - (4*(wall_thickness/3))
+				translate([2*(wall_thickness/3) - joint_tollerance/4, 2*(wall_thickness/3) - joint_tollerance/4, size[2] - 1])
+					cube([ size[0] - (4*(wall_thickness/3)) + joint_tollerance/2
+					     , size[1] - (4*(wall_thickness/3)) + joint_tollerance/2
 					     , joint_size + 2
 					     ]);
 			}
@@ -441,9 +445,9 @@ module box_half(size, wall_thickness, joint_size, female, radius) {
 			union() {
 				// Inner lip
 				difference() {
-					translate([2*(wall_thickness/3), 2*(wall_thickness/3), size[2]])
-						cube([ size[0] - (4*(wall_thickness/3))
-						     , size[1] - (4*(wall_thickness/3))
+					translate([2*(wall_thickness/3) + joint_tollerance/4, 2*(wall_thickness/3) + joint_tollerance/4, size[2]])
+						cube([ size[0] - (4*(wall_thickness/3)) - joint_tollerance/2
+						     , size[1] - (4*(wall_thickness/3)) - joint_tollerance/2
 						     , joint_size
 						     ]);
 					
@@ -464,9 +468,9 @@ module box_half(size, wall_thickness, joint_size, female, radius) {
 							cube([size[0],size[1],joint_size]);
 					}
 					
-					translate([wall_thickness/3, wall_thickness/3, size[2]-1])
-						cube([ size[0] - (2*(wall_thickness/3))
-						     , size[1] - (2*(wall_thickness/3))
+					translate([wall_thickness/3 - joint_tollerance/4, wall_thickness/3 - joint_tollerance/4, size[2]-1])
+						cube([ size[0] - (2*(wall_thickness/3))  + joint_tollerance/2
+						     , size[1] - (2*(wall_thickness/3))  + joint_tollerance/2
 						     , joint_size + 2
 						     ]);
 				}
@@ -475,9 +479,98 @@ module box_half(size, wall_thickness, joint_size, female, radius) {
 	}
 }
 
+// translate([0,0,0])
+// 	box_half(size = [30,30,10], wall_thickness = 5, joint_size = 4, joint_tollerance = 0.5, female = false, radius = 3);
+// translate([40,0,0])
+// 	box_half(size = [30,30,10], wall_thickness = 5, joint_size = 4, joint_tollerance = 0.5, female = true, radius = 3);
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Clips and their cutout
+////////////////////////////////////////////////////////////////////////////////
+
+// width: The width of the clip
+// thickness: The thickness of the shaft
+// shaft_length: The length of the straight section of the clip
+// clip_length: The length of the angled clip section (additional to the shaft_length)
+// clip_protrusion: The distance the point of the clip sticks out from the shaft.
+// clip_tollerance: The additional space added around a clip to account for manufacturing errors.
+module clip(width, thickness, shaft_length, clip_length, clip_protrusion, clip_tollerance) {
+	width = width + clip_tollerance;
+	translate([-clip_tollerance/2, 0,0])
+		union() {
+			// Shaft
+			cube([width, thickness + clip_tollerance, shaft_length - clip_tollerance]);
+			
+			// Clip
+			translate([0,0,shaft_length - clip_tollerance]) {
+				difference() {
+					cube([width, thickness + clip_protrusion + clip_tollerance, clip_length + 2*clip_tollerance]);
+				
+					translate([-1,0,clip_length + clip_tollerance*2])
+						rotate(a=[-atan((clip_length+2*clip_tollerance)/(thickness + clip_protrusion + clip_tollerance)),0,0])
+							cube([width+2, sqrt(pow(thickness + clip_protrusion + clip_tollerance, 2) + pow(clip_length + 2*clip_tollerance,2)), clip_length]);
+				}
+			}
+		}
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Experimentation
 ////////////////////////////////////////////////////////////////////////////////
 
-box_half([55,90,20], 5, 4, true, 3);
+size = [30,30,10];
+wall_thickness = 5;
+joint_size = 4;
+joint_tollerance = 0.5;
+radius = 3;
+clip_thickness = (wall_thickness/3) - (joint_tollerance/4);
+shaft_length = 3.5;
+clip_length = 5;
+clip_protrusion = 1.5;
+clip_width = 7;
+pos_clip_tollerance = 0.0;
+neg_clip_tollerance = 0.5;
+
+//translate([0,0,0]) {
+//	difference() {
+//		box_half( size = size, wall_thickness = wall_thickness
+//		        , joint_size = joint_size, joint_tollerance = joint_tollerance
+//		        , female = false, radius = radius
+//		        );
+//		// Left clip
+//		translate([(size[0]/2) - (clip_width/2),0, size[2]])
+//			mirror([0,0,1])
+//				clip( width = clip_width, thickness = clip_thickness
+//				    , shaft_length = shaft_length, clip_length = clip_length
+//				    , clip_protrusion = clip_protrusion, clip_tollerance = neg_clip_tollerance);
+//		// Right clip
+//		translate([(size[0]/2) - (clip_width/2), size[1], size[2]])
+//			mirror([0,0,1])
+//			mirror([0,1,0])
+//				clip( width = clip_width, thickness = clip_thickness
+//				    , shaft_length = shaft_length, clip_length = clip_length
+//				    , clip_protrusion = clip_protrusion, clip_tollerance = neg_clip_tollerance);
+//	}
+//}
+
+translate([0,0,0]) {
+	union() {
+		box_half( size = size, wall_thickness = wall_thickness
+		        , joint_size = joint_size, joint_tollerance = joint_tollerance
+		        , female = true, radius = radius
+		        );
+		// Left clip
+		translate([(size[0]/2) - (clip_width/2),0, size[2] + joint_size])
+			clip( width = clip_width, thickness = clip_thickness
+			    , shaft_length = shaft_length, clip_length = clip_length
+			    , clip_protrusion = clip_protrusion, clip_tollerance = pos_clip_tollerance);
+		// Right clip
+		translate([(size[0]/2) - (clip_width/2), size[1], size[2] + joint_size])
+			mirror([0,1,0])
+				clip( width = clip_width, thickness = clip_thickness
+				    , shaft_length = shaft_length, clip_length = clip_length
+				    , clip_protrusion = clip_protrusion, clip_tollerance = pos_clip_tollerance);
+	}
+}
