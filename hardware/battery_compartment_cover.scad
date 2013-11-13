@@ -82,15 +82,18 @@ cover( size = cover_size, tab_size = cover_tab_size
      );
 
 translate([30,0,0])
-	translate([5,5,2])
+	translate([5,5,3])
 		difference() {
-			translate([-5,-5,-2])
+			translate([-5,-5,-3])
 				cube([ cover_size[0] + 10
 				     , cover_size[1] + 10
-				     , cover_size[2] + 2
+				     , cover_size[2] + 3
 				     ]);
+			
 			cover_cut_away( size = cover_size, tab_size = cover_tab_size
 			              , clip_size = cover_clip_size
 			              , tollerance = cover_tollerance
 			              );
+			translate([0,0,-cover_size[2]])
+				cube(cover_size);
 		}
