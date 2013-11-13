@@ -1,4 +1,29 @@
 ////////////////////////////////////////////////////////////////////////////////
+// Rounded cube things
+////////////////////////////////////////////////////////////////////////////////
+
+DISABLE_ROUND_CUBE = false;
+
+module round_cube(s, rs) {
+	if (DISABLE_ROUND_CUBE) {
+		cube(s);
+	} else {
+		hull() {
+			for (x = [rs[0], s[0]-rs[0]]) {
+				for (y = [rs[1], s[1]-rs[1]]) {
+					for (z = [rs[2], s[2]-rs[1]]) {
+						translate([x,y,z])
+							scale([rs[0]/5, rs[1]/5, rs[2]/5])
+								sphere(r = 5);
+					}
+				}
+			}
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
 // Halves of a hollow container
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -83,9 +108,9 @@ module box_half(size, wall_thickness, joint_size, joint_tollerance, female, radi
 	}
 }
 
-translate([0,0,0])
-	box_half(size = [30,30,10], wall_thickness = 5, joint_size = 4, joint_tollerance = 0.5, female = false, radius = 3);
-translate([40,0,0])
-	box_half(size = [30,30,10], wall_thickness = 5, joint_size = 4, joint_tollerance = 0.5, female = true, radius = 3);
+//translate([0,0,0])
+//	box_half(size = [30,30,10], wall_thickness = 5, joint_size = 4, joint_tollerance = 0.5, female = false, radius = 3);
+//translate([40,0,0])
+//	box_half(size = [30,30,10], wall_thickness = 5, joint_size = 4, joint_tollerance = 0.5, female = true, radius = 3);
 
 

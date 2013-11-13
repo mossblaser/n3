@@ -71,29 +71,29 @@ module cover_cut_away(size, tab_size, clip_size, tollerance) {
 ////////////////////////////////////////////////////////////////////////////////
 
 cover_size = [20,20,2];
-cover_tab_size = [5,3,1];
+cover_tab_size = [5,3,0.6];
 cover_clip_spring_size = [15,2];
-cover_clip_size = [5,1.5,1];
-cover_tollerance = 0.5;
+cover_clip_size = [5,1.5,0.6];
+cover_tollerance = 2.0;
 
-cover( size = cover_size, tab_size = cover_tab_size
-     , clip_spring_size = cover_clip_spring_size
-     , clip_size = cover_clip_size
-     );
-
+//cover( size = cover_size, tab_size = cover_tab_size
+//     , clip_spring_size = cover_clip_spring_size
+//     , clip_size = cover_clip_size
+//     );
+//
 translate([30,0,0])
-	translate([5,5,3])
+	translate([8,8,3])
 		difference() {
-			translate([-5,-5,-3])
-				cube([ cover_size[0] + 10
-				     , cover_size[1] + 10
-				     , cover_size[2] + 3
+			translate([-8,-8,-3])
+				cube([ cover_size[0] + 16
+				     , cover_size[1] + 16
+				     , cover_size[2] + 4
 				     ]);
 			
 			cover_cut_away( size = cover_size, tab_size = cover_tab_size
 			              , clip_size = cover_clip_size
 			              , tollerance = cover_tollerance
 			              );
-			translate([0,0,-cover_size[2]])
-				cube(cover_size);
+			translate([-cover_tollerance/2,-cover_tollerance/2,-cover_size[2]])
+				cube([cover_size[0]+cover_tollerance,cover_size[1]+cover_tollerance,cover_size[2]+10]);
 		}
