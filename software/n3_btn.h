@@ -7,7 +7,7 @@
 
 #include <wirish/wirish.h>
 
-#define BTN_MAX_JITTER_DURATION 2ul
+#define BTN_MAX_JITTER_DURATION 20ul
 
 /**
  * Assumes a simple push-to-make switch connected to ground and internally

@@ -31,9 +31,12 @@
 // -----------------------------------------------------------------------------
 
 // Serial port used to communicate with the GPS receiver
+// XXX: n3_gps.cpp currently doesn't know which DMA channel to use when
+// presented with a serial port and so if a port other than Serial1 is used, the
+// DMA channel should be changed accordingly in n3_gps.cpp.
 #define N3_GPS_BAUDRATE       57600
-#define n3_gps_serial         Serial2
-#define N3_GPS_SERIAL_DMA_SRC DMA_REQ_SRC_USART2_RX
+#define n3_gps_serial         Serial1
+#define N3_GPS_SERIAL_DMA_SRC DMA_REQ_SRC_USART1_RX
 
 // LCD Display
 #define N3_LCD_RS_PIN     15
@@ -52,8 +55,8 @@
 
 // Battery voltage input
 #define N3_BAT_V_PIN 3
-#define N3_BAT_V_DIV_R1 2200.0
-#define N3_BAT_V_DIV_R2 3300.0
+#define N3_BAT_V_DIV_R1 3300.0
+#define N3_BAT_V_DIV_R2 2200.0
 
 // In practice the system will "happily" run down to about 1.5v but since the
 // battery voltage curve gets steep at about 2v (1v each) this seems like a good
@@ -66,6 +69,6 @@
 #define N3_BAT_MAX_V 2.85
 
 // Button
-#define N3_BTN_PIN 10
+#define N3_BTN_PIN 14
 
 #endif

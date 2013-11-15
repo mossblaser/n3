@@ -22,7 +22,8 @@
 #if STM32_MCU_SERIES == STM32_SERIES_F1
 // On STM32F1 microcontrollers (like what's on Maple and Maple Mini),
 // dma tubes are channels.
-#define USART_RX_DMA_TUBE DMA_CH6
+// XXX: This assumes we're using serial port 1...
+#define USART_RX_DMA_TUBE DMA_CH5
 #elif (STM32_MCU_SERIES == STM32_SERIES_F2 || \
        STM32_MCU_SERIES == STM32_SERIES_F4)
 // On STM32F2 and STM32F4 microcontrollers (Maple 2 will have an F4),

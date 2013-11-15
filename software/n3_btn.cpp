@@ -29,7 +29,7 @@ void
 N3_Btn::begin(void)
 {
 	// Initialise with pull-down and enable an interrupt
-	pinMode(pin, INPUT_PULLDOWN);
+	pinMode(pin, INPUT_PULLUP);
 	attachInterrupt(pin, do_nothing_isr, CHANGE);
 }
 
