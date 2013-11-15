@@ -28,7 +28,10 @@ N3_UI_Satellites_Window::update(void)
 		n3_lcd.home();
 		//            |-----|
 		n3_lcd.print(num_sats);
-		n3_lcd.print(" sats");
+		if (num_sats != 1)
+			n3_lcd.print(" sats");
+		else
+			n3_lcd.print(" sat ");
 		n3_lcd.setCursor(0,1);
 		switch(fix_type) {
 			default:
