@@ -42,8 +42,8 @@ N3_UI_Datetime_Window   n3_ui_datetime_window;
 N3_UI_Satellites_Window n3_ui_satellites_window;
 
 // System windows
-N3_UI_SD_Log_Window     n3_ui_sd_log_window;
-N3_UI_About_Window      n3_ui_about_window;
+N3_UI_SD_Log_Window n3_ui_sd_log_window;
+N3_UI_About_Window  n3_ui_about_window;
 
 
 N3_UI_Window *windows[] = {
