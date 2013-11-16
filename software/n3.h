@@ -26,6 +26,10 @@
 // What is the minimum threshold for a HDOP value to be considered "excellent"?
 #define N3_GPS_EXCELLENT_HDOP 2.0
 
+// Number of msec between positions being logged to the SD card
+#define N3_LOG_INTERVAL 1000
+
+
 // -----------------------------------------------------------------------------
 // Pins and device definitions
 // -----------------------------------------------------------------------------
@@ -70,5 +74,9 @@
 
 // Button
 #define N3_BTN_PIN 14
+
+
+// SPI port used by the SD card
+#define N3_SD_CARD_SPI HardwareSPI(2)
 
 #endif

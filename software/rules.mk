@@ -68,6 +68,7 @@ cppSRCS_$(d) += n3_globals.cpp
 cppSRCS_$(d) += n3_bat.cpp
 cppSRCS_$(d) += n3_gps.cpp
 cppSRCS_$(d) += n3_btn.cpp
+cppSRCS_$(d) += n3_sd_log.cpp
 cppSRCS_$(d) += n3_sleep.cpp
 
 cppSRCS_$(d) += n3_wgs84_to_os.cpp
@@ -80,6 +81,7 @@ cppSRCS_$(d) += n3_ui_grid_ref.cpp
 cppSRCS_$(d) += n3_ui_lat_lon.cpp
 cppSRCS_$(d) += n3_ui_datetime.cpp
 cppSRCS_$(d) += n3_ui_no_fix.cpp
+cppSRCS_$(d) += n3_ui_sd_log.cpp
 
 # Tiny GPS
 cppSRCS_$(d) += TinyGPS/TinyGPS.cpp

@@ -20,6 +20,7 @@ n3_icons: n3_icons/about_window_splash.h         \
           n3_icons/wgs_altitude_window_splash.h  \
           n3_icons/wgs_lat_lon_window_splash.h   \
           n3_icons/datetime_window_splash.h      \
+          n3_icons/sd_log_window_splash.h        \
           n3_icons/no_fix_window_graphic.h       \
           n3_icons/no_fix_beam0_window_graphic.h \
           n3_icons/no_fix_beam1_window_graphic.h \

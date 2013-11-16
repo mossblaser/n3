@@ -3,6 +3,7 @@
 
 #include "n3.h"
 #include "n3_globals.h"
+#include "n3_sd_log.h"
 #include "n3_sleep.h"
 
 #include "n3_ui.h"
@@ -13,9 +14,11 @@
 #include "n3_ui_lat_lon.h"
 #include "n3_ui_datetime.h"
 #include "n3_ui_no_fix.h"
+#include "n3_ui_sd_log.h"
 
 N3_UI_About_Window      n3_ui_about_window;
 N3_UI_Satellites_Window n3_ui_satellites_window;
+N3_UI_SD_Log_Window     n3_ui_sd_log_window;
 N3_UI_Datetime_Window   n3_ui_datetime_window;
 
 N3_UI_SEA_Altitude_Window   n3_ui_sea_altitude_window;
@@ -43,6 +46,7 @@ N3_UI_Window *windows[] = {
 	
 	&n3_ui_datetime_window,
 	&n3_ui_satellites_window,
+	&n3_ui_sd_log_window,
 	&n3_ui_about_window,
 };
 int num_windows = sizeof(windows)/sizeof(N3_UI_Window *);
@@ -54,10 +58,12 @@ int main(void)
 	n3_btn.begin();
 	n3_bat.begin();
 	n3_gps.begin();
+	n3_sd_log.begin();
 	n3_ui.begin();
 	
 	while (true) {
 		n3_gps.update();
+		n3_sd_log.update();
 		n3_btn.update();
 		n3_ui.update();
 		
