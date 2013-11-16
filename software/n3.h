@@ -27,7 +27,7 @@
 #define N3_GPS_EXCELLENT_HDOP 2.0
 
 // Number of msec between positions being logged to the SD card
-#define N3_LOG_INTERVAL 1000
+#define N3_LOG_INTERVAL 10000
 
 
 // -----------------------------------------------------------------------------
