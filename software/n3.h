@@ -12,7 +12,7 @@
 // -----------------------------------------------------------------------------
 
 // How frequently should the UI be refreshed in the worst case? (msec)
-#define N3_UI_UPDATE_PERIOD 1100
+#define N3_UI_UPDATE_PERIOD 1100ul
 
 // How long should the button be pressed to count as a long press (msec)
 #define N3_BTN_LONG_PRESS_DURATION 500ul
@@ -24,10 +24,10 @@
 #define N3_PAGE_DURATION 3000ul
 
 // What is the minimum threshold for a HDOP value to be considered "excellent"?
-#define N3_GPS_EXCELLENT_HDOP 2.0
+#define N3_GPS_EXCELLENT_HDOP 5.0
 
 // Number of msec between positions being logged to the SD card
-#define N3_LOG_INTERVAL 10000
+#define N3_LOG_INTERVAL 10000ul
 
 
 // -----------------------------------------------------------------------------
