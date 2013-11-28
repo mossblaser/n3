@@ -1,3 +1,15 @@
+#!/usr/bin/env python
+
+"""
+A quick and dirty program which takes 1-bit images containing 'screenshots' of
+LCD character displays (including the blank pixels between characters) and
+outputs a stylised PNG showing how it might look on a green 8x2 display.
+
+Usage::
+
+  python hd44780_render.py input_image.png output_image.png
+"""
+
 import Image, ImageDraw
 
 
@@ -10,8 +22,8 @@ class HD44780Renderer(object):
 	            , char_space = 5
 	            , border_space = 12
 	            , pixel_on_colour = (5,5,5)
-	            , pixel_off_colour = (104,136,7)
-	            , background_colour = (124,163,4)
+	            , pixel_off_colour = (124,159,49)
+	            , background_colour = (135,173,52)
 	            ):
 		self.width = width
 		self.height = height
@@ -24,6 +36,10 @@ class HD44780Renderer(object):
 		self.background_colour = background_colour
 	
 	def _init_image(self):
+		"""
+		Initialise the image/canvas.
+		"""
+		# Create a blank image
 		self.image = Image.new("RGB", (
 			self.width * ((self.pixel_size + self.pixel_space)*5 - self.pixel_space + self.char_space) - self.char_space
 			  + self.border_space*2
@@ -31,17 +47,25 @@ class HD44780Renderer(object):
 			self.height * ((self.pixel_size + self.pixel_space)*8 - self.pixel_space + self.char_space) - self.char_space
 			  + self.border_space*2
 		))
-			
+		
+		# Initialise the drawing canvas with an appropriate background
 		self.drawing = ImageDraw.Draw(self.image)
 		self.drawing.rectangle(((0,0), self.image.size), fill = self.background_colour)
 	
 	
 	def _finalise_image(self):
+		"""
+		Commit the canvas' changes to the image
+		"""
 		del self.drawing
 		return self.image
 	
 	
 	def _to_px(self, x, y):
+		"""
+		Convert an x/y coordinate in a screen shot image to the corner of a pixel in
+		the output image.
+		"""
 		col = x/6
 		row = y/9
 		char_x = x%6
@@ -60,6 +84,9 @@ class HD44780Renderer(object):
 	
 	
 	def _draw_pixel(self, x, y, state):
+		"""
+		Given a pixel coordinate and value, draw this pixel into the output.
+		"""
 		# Don't draw intermediate pixels
 		if x%6 == 5 or y%9 == 8:
 			return
@@ -72,6 +99,9 @@ class HD44780Renderer(object):
 	
 	
 	def render(self, im):
+		"""
+		Given a screen shot, return a stylised version.
+		"""
 		self._init_image()
 		
 		for x in range(im.size[0]):
